@@ -47,15 +47,15 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Editorial Header */}
       <div>
-        <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+        <div className="flex items-center space-x-2 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
           <span>The Full Story</span>
           <span>·</span>
           <span>Chronological Summary</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mt-1">
           The Full Story
         </h1>
-        <p className="text-sm text-warm-600 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
           Brings together messages, voice notes, and screenshots into an orderly chronological story, linking each statement to its preserved proof item.
         </p>
       </div>
@@ -63,51 +63,51 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
       {/* Formal Narrative Summary */}
       <div className="card-warm p-6 sm:p-8 space-y-6">
         <div>
-          <div className="flex items-center justify-between pb-3 border-b border-warm-200">
-            <span className="text-xs font-bold text-warm-500 uppercase tracking-wider">
+          <div className="flex items-center justify-between pb-3 border-b border-[var(--border-color)]">
+            <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
               Summary of What Happened
             </span>
-            <span className="text-xs text-warm-600">
+            <span className="text-xs text-[var(--text-secondary)]">
               {data.total_events} Milestones · {data.total_evidence_pieces} Proof Items
             </span>
           </div>
 
-          <div className="mt-4 p-5 rounded-xl bg-warm-50 border border-warm-200 text-base sm:text-lg text-charcoal leading-relaxed font-normal">
+          <div className="mt-4 p-5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-base sm:text-lg text-[var(--text-primary)] leading-relaxed font-normal">
             "{data.formal_narrative}"
           </div>
         </div>
 
         {/* Milestone Sequence with Evidence Citations */}
-        <div className="pt-4 border-t border-warm-200 space-y-4">
-          <h2 className="text-xs font-bold text-warm-600 uppercase tracking-wider">
+        <div className="pt-4 border-t border-[var(--border-color)] space-y-4">
+          <h2 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
             Step-by-Step Events
           </h2>
 
           <div className="space-y-4">
             {data.chronological_milestones.map((m) => (
-              <div key={m.event_id} className="p-4 rounded-xl bg-warm-50 border border-warm-200 space-y-2">
+              <div key={m.event_id} className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs">
                   <div className="flex items-center space-x-2">
-                    <span className="font-bold text-warm-900">{m.date_label}</span>
+                    <span className="font-bold text-[var(--text-primary)]">{m.date_label}</span>
                     <span>·</span>
-                    <span className="text-warm-600">{m.timestamp}</span>
+                    <span className="text-[var(--text-secondary)]">{m.timestamp}</span>
                     <span>·</span>
-                    <span className="font-mono text-warm-700 bg-white px-2 py-0.5 rounded border border-warm-200">
+                    <span className="font-mono text-[var(--text-primary)] bg-[var(--bg-card)] px-2 py-0.5 rounded border border-[var(--border-color)]">
                       {m.account_handle}
                     </span>
                   </div>
 
-                  <span className="font-bold text-warm-700 uppercase tracking-wider text-[10px]">
+                  <span className="font-bold text-[var(--text-muted)] uppercase tracking-wider text-[10px]">
                     {m.stage.replace(/_/g, ' ')}
                   </span>
                 </div>
 
-                <p className="text-sm font-semibold text-charcoal">
+                <p className="text-sm font-semibold text-[var(--text-primary)]">
                   {m.summary}
                 </p>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-warm-200/80 text-xs">
-                  <span className="text-warm-600 italic">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-[var(--border-color)] text-xs">
+                  <span className="text-[var(--text-secondary)] italic">
                     Original message: "{m.raw_excerpt}"
                   </span>
 
@@ -127,10 +127,10 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
         </div>
 
         {/* Action Button */}
-        <div className="pt-4 border-t border-warm-200 flex justify-end">
+        <div className="pt-4 border-t border-[var(--border-color)] flex justify-end">
           <button
             onClick={() => navigate('/complaint')}
-            className="bg-charcoal text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-bold shadow-sm transition-all flex items-center space-x-2"
+            className="bg-aegis-rose-accent hover:bg-aegis-rose-hover text-white px-6 py-2.5 rounded-full text-xs font-bold shadow-sm transition-all flex items-center space-x-2"
           >
             <span>Proceed to Official Report Pack</span>
             <ArrowRight className="w-4 h-4" />

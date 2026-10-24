@@ -65,3 +65,13 @@
   filter: blur(0);
   user-select: auto;
 }
+
+/* Suppress browser scrollbars on overflow containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

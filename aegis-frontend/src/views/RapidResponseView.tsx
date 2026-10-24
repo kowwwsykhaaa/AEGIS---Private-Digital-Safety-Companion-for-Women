@@ -78,15 +78,15 @@ Complainant.`;
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Editorial Header */}
       <div>
-        <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+        <div className="flex items-center space-x-2 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
           <span>Actionable Guidance</span>
           <span>·</span>
           <span>Safety Checklist</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mt-1">
           Immediate Action Checklist
         </h1>
-        <p className="text-sm text-warm-600 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
           A calm, practical sequence of steps to protect your peace of mind and secure your digital presence right now.
         </p>
       </div>
@@ -100,13 +100,13 @@ Complainant.`;
               key={st.num}
               onClick={() => toggleStep(st.num)}
               className={`card-warm p-5 cursor-pointer transition-all ${
-                isDone ? 'bg-warm-100/50 opacity-80' : 'hover:border-aegis-rose-border'
+                isDone ? 'bg-[var(--bg-card-subtle)] opacity-80' : 'hover:border-aegis-rose-border'
               }`}
             >
               <div className="flex items-start space-x-4">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 transition-all ${
                   isDone 
-                    ? 'bg-aegis-sage-accent text-white' 
+                    ? 'bg-emerald-600 text-white' 
                     : 'bg-aegis-rose-light text-aegis-rose-text border border-aegis-rose-border'
                 }`}>
                   {isDone ? <Check className="w-4 h-4" /> : st.num}
@@ -114,14 +114,14 @@ Complainant.`;
 
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center justify-between">
-                    <h3 className={`text-base font-bold text-charcoal ${isDone ? 'line-through text-warm-500' : ''}`}>
+                    <h3 className={`text-base font-bold text-[var(--text-primary)] ${isDone ? 'line-through text-[var(--text-muted)]' : ''}`}>
                       {st.title}
                     </h3>
-                    <span className="text-xs text-warm-500 font-normal">
+                    <span className="text-xs text-[var(--text-muted)] font-normal">
                       {isDone ? "Completed" : "Tap when done"}
                     </span>
                   </div>
-                  <p className="text-xs text-warm-600 leading-relaxed font-normal">
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-normal">
                     {st.detail}
                   </p>
                 </div>
@@ -133,40 +133,40 @@ Complainant.`;
 
       {/* Platform Grievance Template Card */}
       <div className="card-warm p-6 sm:p-8 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-warm-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <span className="text-xs font-bold text-warm-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
               Platform Reporting
             </span>
-            <h2 className="text-lg font-bold text-charcoal mt-0.5">
+            <h2 className="text-lg font-bold text-[var(--text-primary)] mt-0.5">
               Notice to Platform Grievance Officer (India IT Rules)
             </h2>
           </div>
 
           <button
             onClick={copyNotice}
-            className="flex items-center space-x-1.5 text-xs text-warm-800 bg-white hover:bg-warm-100 px-4 py-2 rounded-full border border-warm-300 transition-colors font-bold shadow-sm self-start sm:self-auto"
+            className="flex items-center space-x-1.5 text-xs text-[var(--text-primary)] bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] px-4 py-2 rounded-full border border-[var(--border-color)] transition-colors font-bold shadow-sm self-start sm:self-auto"
           >
             {copiedTemplate ? (
               <>
-                <Check className="w-3.5 h-3.5 text-aegis-sage-accent" />
+                <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>Notice Copied</span>
               </>
             ) : (
               <>
-                <Copy className="w-3.5 h-3.5 text-warm-600" />
+                <Copy className="w-3.5 h-3.5 text-[var(--text-muted)]" />
                 <span>Copy Notice Template</span>
               </>
             )}
           </button>
         </div>
 
-        <div className="bg-warm-50 p-4 rounded-xl border border-warm-200 font-mono text-xs text-warm-800 whitespace-pre-wrap leading-relaxed">
+        <div className="bg-[var(--bg-card-subtle)] p-4 rounded-xl border border-[var(--border-color)] font-mono text-xs text-[var(--text-primary)] whitespace-pre-wrap leading-relaxed">
           {grievanceTemplate}
         </div>
 
-        <div className="p-4 rounded-xl bg-warm-100 text-xs text-warm-700 space-y-1">
-          <strong className="font-bold block text-warm-900">
+        <div className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] space-y-1">
+          <strong className="font-bold block text-[var(--text-primary)]">
             How to Send:
           </strong>
           <p>Under Rule 3(2)(b) of the Information Technology Rules 2021, platforms in India are required to acknowledge grievance complaints within 24 hours and resolve harassment or blackmail reports promptly.</p>

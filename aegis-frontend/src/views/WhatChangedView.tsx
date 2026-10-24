@@ -57,15 +57,15 @@ export const WhatChangedView: React.FC<WhatChangedViewProps> = ({ incidentId }) 
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Editorial Header */}
       <div>
-        <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+        <div className="flex items-center space-x-2 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
           <span>Comparing Messages</span>
           <span>·</span>
           <span>What is New</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mt-1">
           What Changed?
         </h1>
-        <p className="text-sm text-warm-600 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
           AEGIS compares your latest messages with previous ones to explain exactly what escalated and what new warning signs appeared.
         </p>
       </div>
@@ -74,42 +74,42 @@ export const WhatChangedView: React.FC<WhatChangedViewProps> = ({ incidentId }) 
       <div className="card-warm p-6 sm:p-8 space-y-8">
         {/* Progression Stage Bar */}
         <div>
-          <h2 className="text-xs font-bold text-warm-600 uppercase tracking-wider mb-4">
+          <h2 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-4">
             Earlier vs. Now
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
             {/* 1. BEFORE STATE */}
-            <div className="bg-warm-50 rounded-2xl border border-warm-200 p-5 text-center space-y-2">
-              <span className="text-[11px] font-bold text-warm-500 uppercase tracking-wider">
+            <div className="bg-[var(--bg-card-subtle)] rounded-2xl border border-[var(--border-color)] p-5 text-center space-y-2">
+              <span className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
                 Earlier Messages
               </span>
-              <div className="text-xl font-extrabold text-charcoal">
+              <div className="text-xl font-extrabold text-[var(--text-primary)]">
                 {formatLevel(changes.before_risk)}
               </div>
-              <div className="inline-block text-xs font-bold px-3 py-1 rounded-full bg-warm-200 text-warm-800">
+              <div className="inline-block text-xs font-bold px-3 py-1 rounded-full bg-[var(--border-color)] text-[var(--text-primary)]">
                 {changes.before_stage.replace(/_/g, ' ')}
               </div>
-              <p className="text-[11px] text-warm-500 pt-1">
+              <p className="text-[11px] text-[var(--text-muted)] pt-1">
                 Initial baseline
               </p>
             </div>
 
             {/* 2. THE TRANSITION: NEW EVIDENCE */}
             <div className="flex flex-col items-center justify-center p-4 text-center">
-              <div className="w-10 h-10 rounded-full bg-aegis-rose-light border border-aegis-rose-border flex items-center justify-center text-aegis-rose-text mb-2 shadow-sm">
+              <div className="w-10 h-10 rounded-full bg-aegis-rose-light/50 border border-aegis-rose-border flex items-center justify-center text-aegis-rose-text mb-2 shadow-sm">
                 <ArrowRight className="w-5 h-5" />
               </div>
-              <span className="text-xs font-bold text-warm-900">
+              <span className="text-xs font-bold text-[var(--text-primary)]">
                 New Proof Added
               </span>
-              <span className="text-[11px] text-warm-600 mt-0.5 max-w-[200px]">
+              <span className="text-[11px] text-[var(--text-secondary)] mt-0.5 max-w-[200px]">
                 New messages with higher pressure or threats
               </span>
             </div>
 
             {/* 3. AFTER STATE */}
-            <div className="bg-aegis-rose-light/40 rounded-2xl border-2 border-aegis-rose-border p-5 text-center space-y-2">
+            <div className="bg-aegis-rose-light/30 rounded-2xl border-2 border-aegis-rose-border p-5 text-center space-y-2">
               <span className="text-[11px] font-bold text-aegis-rose-text uppercase tracking-wider">
                 Current Situation
               </span>
@@ -127,40 +127,40 @@ export const WhatChangedView: React.FC<WhatChangedViewProps> = ({ incidentId }) 
         </div>
 
         {/* SECTION: WHAT CHANGED? */}
-        <div className="pt-6 border-t border-warm-200 space-y-4">
-          <h2 className="text-xs font-bold text-warm-600 uppercase tracking-wider">
+        <div className="pt-6 border-t border-[var(--border-color)] space-y-4">
+          <h2 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
             Newly Detected Warning Signs
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {changes.new_threat_signals.map((sig, i) => (
-              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-warm-50 border border-warm-200 text-xs">
+              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs">
                 <PlusCircle className="w-4 h-4 text-aegis-rose-accent shrink-0 mt-0.5" />
-                <span className="font-bold text-warm-900">{sig}</span>
+                <span className="font-bold text-[var(--text-primary)]">{sig}</span>
               </div>
             ))}
 
             {changes.new_accounts_detected.map((acc, i) => (
-              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-warm-50 border border-warm-200 text-xs">
-                <PlusCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <span className="font-bold text-warm-900">
+              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs">
+                <PlusCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <span className="font-bold text-[var(--text-primary)]">
                   New account appeared: <span className="font-mono">{acc}</span>
                 </span>
               </div>
             ))}
 
             {changes.new_exposure_elements.map((exp, i) => (
-              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-warm-50 border border-warm-200 text-xs">
-                <PlusCircle className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                <span className="font-bold text-warm-900">
+              <div key={i} className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs">
+                <PlusCircle className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+                <span className="font-bold text-[var(--text-primary)]">
                   Mentioned personal info: {exp}
                 </span>
               </div>
             ))}
 
-            <div className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-warm-50 border border-warm-200 text-xs">
+            <div className="flex items-start space-x-2.5 p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs">
               <TrendingUp className="w-4 h-4 text-aegis-rose-accent shrink-0 mt-0.5" />
-              <span className="font-bold text-warm-900">
+              <span className="font-bold text-[var(--text-primary)]">
                 Worry level shifted: {formatLevel(changes.before_risk)} ➔ {formatLevel(changes.after_risk)}
               </span>
             </div>
@@ -168,30 +168,30 @@ export const WhatChangedView: React.FC<WhatChangedViewProps> = ({ incidentId }) 
         </div>
 
         {/* SECTION: WHY? */}
-        <div className="pt-6 border-t border-warm-200 space-y-3">
-          <h2 className="text-xs font-bold text-warm-600 uppercase tracking-wider">
+        <div className="pt-6 border-t border-[var(--border-color)] space-y-3">
+          <h2 className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
             Why Did It Change?
           </h2>
 
-          <div className="p-4 rounded-xl bg-warm-50 border border-warm-200 text-sm text-warm-900 leading-relaxed font-normal">
+          <div className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-sm text-[var(--text-primary)] leading-relaxed font-normal">
             {changes.why_it_changed}
           </div>
         </div>
 
         {/* SECTION: RECOMMENDED ACTION */}
-        <div className="pt-6 border-t border-warm-200 bg-warm-50 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 p-6 sm:p-8 rounded-b-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="pt-6 border-t border-[var(--border-color)] bg-[var(--bg-card-subtle)] -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 p-6 sm:p-8 rounded-b-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-warm-500 uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider block">
               Suggested Next Step
             </span>
-            <p className="text-sm font-bold text-charcoal">
+            <p className="text-sm font-bold text-[var(--text-primary)]">
               {changes.recommended_priority_action}
             </p>
           </div>
 
           <button
             onClick={() => navigate('/rapid-response')}
-            className="bg-charcoal text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-bold shrink-0 shadow-sm transition-colors"
+            className="bg-aegis-rose-accent hover:bg-aegis-rose-hover text-white px-6 py-2.5 rounded-full text-xs font-bold shrink-0 shadow-sm transition-colors"
           >
             Review Protective Next Steps
           </button>

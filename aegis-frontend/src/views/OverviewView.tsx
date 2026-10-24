@@ -221,7 +221,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider block">
             Select a Situation ({casesList.length} total)
           </label>
-          <div className="flex space-x-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex flex-wrap items-center gap-2 pb-1">
             {casesList.map((c) => {
               const isSelected = (incident?.id === c.id) || (activeCaseId === c.id);
               return (
@@ -262,8 +262,8 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
             </div>
           </div>
 
-          {/* Case Navigation Tabs (Zero Emojis) */}
-          <div className="flex space-x-2 border-b border-[var(--border-color)] pb-2 overflow-x-auto scrollbar-none text-xs font-semibold">
+          {/* Case Navigation Tabs (Flex-wrap, zero scrollbars) */}
+          <div className="flex flex-wrap items-center gap-2 border-b border-[var(--border-color)] pb-3 text-xs font-semibold">
             <button
               onClick={() => setActiveTab('proof')}
               className={`px-3.5 py-1.5 rounded-full transition-all ${

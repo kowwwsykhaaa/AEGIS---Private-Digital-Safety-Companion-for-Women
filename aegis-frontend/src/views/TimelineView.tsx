@@ -27,15 +27,15 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ incident }) => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+          <div className="flex items-center space-x-2 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
             <span>Order of Events</span>
             <span>·</span>
             <span>Case Timeline</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mt-1">
             Case Timeline
           </h1>
-          <p className="text-sm text-warm-600 mt-1">
+          <p className="text-sm text-[var(--text-secondary)] mt-1">
             Every recorded message, voice note, and screenshot ordered chronologically with its saved date and safety stamp.
           </p>
         </div>
@@ -50,7 +50,7 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ incident }) => {
       </div>
 
       {/* Timeline Stream */}
-      <div className="relative border-l-2 border-warm-300 ml-4 pl-6 space-y-6">
+      <div className="relative border-l-2 border-[var(--border-color)] ml-4 pl-6 space-y-6">
         {sortedEvents.map((evt, idx) => {
           const isCoercion = evt.stage === 'COERCION';
           const isIntimidation = evt.stage === 'INTIMIDATION';
@@ -58,56 +58,56 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ incident }) => {
           return (
             <div key={evt.id} className="relative">
               {/* Timeline marker */}
-              <div className={`absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-2 bg-white flex items-center justify-center ${
+              <div className={`absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-2 bg-[var(--bg-card)] flex items-center justify-center ${
                 isCoercion
                   ? 'border-aegis-rose-accent bg-aegis-rose-light'
                   : isIntimidation
                   ? 'border-aegis-amber-accent bg-aegis-amber-light'
-                  : 'border-warm-400 bg-warm-100'
+                  : 'border-[var(--text-secondary)] bg-[var(--border-color)]'
               }`}>
                 <div className={`w-1.5 h-1.5 rounded-full ${
-                  isCoercion ? 'bg-aegis-rose-accent' : isIntimidation ? 'bg-aegis-amber-accent' : 'bg-warm-600'
+                  isCoercion ? 'bg-aegis-rose-accent' : isIntimidation ? 'bg-aegis-amber-accent' : 'bg-[var(--text-primary)]'
                 }`} />
               </div>
 
               {/* Event Card */}
               <div className="card-warm p-5 space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-warm-200">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-[var(--border-color)]">
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs uppercase tracking-wider font-extrabold text-warm-500">
+                    <span className="text-xs uppercase tracking-wider font-extrabold text-[var(--text-muted)]">
                       Day 0{idx + 1}
                     </span>
                     <span>·</span>
-                    <span className="text-xs text-warm-700 font-bold">
+                    <span className="text-xs text-[var(--text-primary)] font-bold">
                       {new Date(evt.timestamp).toLocaleDateString()}
                     </span>
                     <span>·</span>
-                    <span className="text-xs font-mono text-warm-700 bg-warm-100 px-2 py-0.5 rounded-md border border-warm-200">
+                    <span className="text-xs font-mono text-[var(--text-primary)] bg-[var(--bg-card-subtle)] px-2 py-0.5 rounded-md border border-[var(--border-color)]">
                       {evt.account_handle || 'Unknown Account'}
                     </span>
                   </div>
 
                   <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border self-start ${
                     isCoercion
-                      ? 'bg-aegis-rose-light text-aegis-rose-text border-aegis-rose-border'
+                      ? 'bg-aegis-rose-light/50 text-aegis-rose-text border-aegis-rose-border'
                       : isIntimidation
-                      ? 'bg-aegis-amber-light text-aegis-amber-text border-aegis-amber-border'
-                      : 'bg-warm-100 text-warm-800 border-warm-300'
+                      ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
+                      : 'bg-[var(--bg-card-subtle)] text-[var(--text-secondary)] border-[var(--border-color)]'
                   }`}>
                     {evt.stage.replace(/_/g, ' ')}
                   </span>
                 </div>
 
                 <div className="space-y-1">
-                  <div className="font-bold text-sm text-charcoal">
+                  <div className="font-bold text-sm text-[var(--text-primary)]">
                     {evt.summary}
                   </div>
-                  <div className="p-3 rounded-xl bg-warm-50 border border-warm-200 text-xs text-warm-800 font-sans leading-relaxed">
+                  <div className="p-3 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
                     "{evt.raw_content}"
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-warm-500 pt-1">
+                <div className="flex items-center justify-between text-[11px] text-[var(--text-muted)] pt-1">
                   <span>Platform: {evt.source_platform}</span>
                   {evt.evidence_id && (
                     <button

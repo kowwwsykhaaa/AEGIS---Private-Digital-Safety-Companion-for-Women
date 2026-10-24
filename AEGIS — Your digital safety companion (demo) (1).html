@@ -6,7 +6,7 @@
 <title>AEGIS — Your digital safety companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #FBF6F3;
@@ -67,7 +67,7 @@
 body {
   background: var(--bg);
   color: var(--tx);
-  font: 16px/1.6 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font: 15px/1.6 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -115,11 +115,10 @@ header {
 
 #nav {
   display: flex;
+  align-items: center;
   gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex-wrap: wrap;
 }
-#nav::-webkit-scrollbar { display: none; }
 
 #nav button {
   all: unset;
@@ -140,6 +139,54 @@ header {
   background: var(--acs);
   color: var(--ac);
 }
+
+/* More Tools Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 250px;
+  background: var(--card);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  padding: 8px 0;
+  z-index: 100;
+  display: none;
+}
+.dropdown-menu.show {
+  display: block;
+}
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  color: var(--tx);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.dropdown-item:hover {
+  background: var(--acs-soft);
+  color: var(--ac);
+}
+.dropdown-item .sub {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--mu);
+  margin-top: 2px;
+}
+
 
 .header-right {
   display: flex;
@@ -163,13 +210,29 @@ header {
 }
 .icon-btn:hover { border-color: var(--ac); }
 
+.theme-btn {
+  background: var(--card);
+  border: 1.5px solid var(--ln);
+  color: var(--tx);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+.theme-btn:hover { border-color: var(--ac); color: var(--ac); }
+
 .av {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   background: var(--ac);
   color: #fff;
-  font: 800 0.95rem 'Nunito', sans-serif;
+  font: 800 0.95rem 'Plus Jakarta Sans', sans-serif;
   border: none;
   cursor: pointer;
   display: flex;
@@ -189,10 +252,10 @@ main {
 }
 
 /* Typography */
-h1 { font-size: 2.1rem; font-weight: 800; line-height: 1.25; margin-bottom: 0.4em; color: var(--tx); }
-h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; margin: 1.1em 0 0.5em; color: var(--tx); }
+h1 { font-family: 'Lora', Georgia, serif; font-size: 2.05rem; font-weight: 700; line-height: 1.28; margin-bottom: 0.4em; color: var(--tx); }
+h2 { font-family: 'Lora', Georgia, serif; font-size: 1.48rem; font-weight: 700; line-height: 1.32; margin: 1.1em 0 0.5em; color: var(--tx); }
 h2:first-child { margin-top: 0; }
-h3 { font-size: 1.15rem; font-weight: 700; margin: 0.7em 0 0.4em; color: var(--tx); }
+h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.12rem; font-weight: 700; margin: 0.7em 0 0.4em; color: var(--tx); }
 p { margin: 0.5em 0; color: var(--tx-soft); }
 .mu { color: var(--mu); }
 .sm { font-size: 0.88rem; }
@@ -345,11 +408,9 @@ p { margin: 0.5em 0; color: var(--tx-soft); }
   display: flex;
   gap: 6px;
   margin-bottom: 18px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  flex-wrap: wrap;
   padding-bottom: 4px;
 }
-.tabs::-webkit-scrollbar { display: none; }
 
 .tabs button {
   cursor: pointer;
@@ -541,13 +602,16 @@ li { margin-bottom: 8px; color: var(--tx-soft); }
   </a>
   <div id="nav"></div>
   <div class="header-right">
-    <button class="icon-btn" id="theme" aria-label="Toggle theme">☀</button>
+    <button class="theme-btn" id="theme" aria-label="Toggle theme">
+      <span id="theme-icon"></span>
+      <span id="theme-text">Night</span>
+    </button>
     <button class="av" id="av" data-v="profile" aria-label="My profile">A</button>
   </div>
 </header>
 
 <button class="btn p" id="qe" title="Instantly hide this application (Shortcut: Esc)">
-  🛡️ Quick Exit <span class="sm mu" style="color:rgba(255,255,255,0.7);font-size:0.75rem;margin-left:4px">Esc</span>
+  Quick Exit <span class="sm mu" style="color:rgba(255,255,255,0.7);font-size:0.75rem;margin-left:4px">Esc</span>
 </button>
 
 <div id="cover">
@@ -598,12 +662,12 @@ const REASON = {
   coerce: 'They are making demands and threatening to share private things about you.'
 };
 const TYPES = [
-  ['screenshot', '📸', 'Screenshot'],
-  ['audio', '🎧', 'Audio Note'],
-  ['message', '💬', 'Message'],
-  ['link', '🔗', 'Link or Profile'],
-  ['note', '📝', 'Personal Note'],
-  ['file', '📎', 'Other File']
+  ['screenshot', '', 'Screenshot'],
+  ['audio', '', 'Audio Note'],
+  ['message', '', 'Message'],
+  ['link', '', 'Link or Profile'],
+  ['note', '', 'Personal Note'],
+  ['file', '', 'Other File']
 ];
 const TI = t => TYPES.find(x => x[0] === t) || TYPES[0];
 
@@ -739,14 +803,14 @@ function addEventToCase() {
 }
 
 const pill = l => `<span class="pill L${l}">${LV[l]}</span>`;
-const dot = c => ({ r: '🔴', a: '🟠', y: '🟡' }[c] || '•');
+const dot = c => '•';
 
 const NAVI = [
-  ['cases', '📁 My Cases'],
-  ['add', '➕ Add Proof'],
-  ['report', '📋 Report Pack'],
-  ['help', '🆘 Help & Helplines'],
-  ['privacy', '🔒 Privacy']
+  ['cases', 'My Cases'],
+  ['add', 'Add Proof'],
+  ['report', 'Report Pack'],
+  ['help', 'Help & Helplines'],
+  ['privacy', 'Privacy']
 ];
 
 function nav() {
@@ -759,9 +823,71 @@ function nav() {
   if (isLanding) {
     $('#nav').innerHTML = '';
   } else {
-    $('#nav').innerHTML = NAVI.map(i => `<button class="${S.view === i[0] || (i[0] === 'cases' && S.view === 'case') ? 'on' : ''}" data-v="${i[0]}">${i[1]}</button>`).join('');
+    $('#nav').innerHTML = NAVI.map(i => `<button class="${S.view === i[0] || (i[0] === 'cases' && S.view === 'case') ? 'on' : ''}" data-v="${i[0]}">${i[1]}</button>`).join('') + `
+      <div class="dropdown" id="more-tools-wrap">
+        <button id="more-tools-btn" class="theme-btn" style="border-radius:24px;padding:8px 14px;border:none;color:var(--mu);font-size:0.9rem;font-weight:700" onclick="toggleMoreTools(event)">
+          More tools <span style="font-size:0.75rem;margin-left:2px">▾</span>
+        </button>
+        <div class="dropdown-menu" id="more-tools-menu">
+          <div style="padding:6px 16px;font-size:0.7rem;font-weight:800;color:var(--mu);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--ln)">
+            Detailed Case Tools
+          </div>
+          <button class="dropdown-item" onclick="openCaseTool('story')">
+            Timeline
+            <span class="sub">Day-by-day story of all events</span>
+          </button>
+          <button class="dropdown-item" onclick="openCaseTool('link')">
+            Connected Info
+            <span class="sub">Linked accounts, phone numbers & clues</span>
+          </button>
+          <button class="dropdown-item" onclick="openCaseTool('new')">
+            What Changed?
+            <span class="sub">Shifts in worry level & warning signs</span>
+          </button>
+          <button class="dropdown-item" onclick="openCaseTool('todo')">
+            What To Do
+            <span class="sub">Immediate protective steps & advice</span>
+          </button>
+          <button class="dropdown-item" onclick="openCaseTool('proof')">
+            Saved Proof Vault
+            <span class="sub">Tamper-proof safety stamps & files</span>
+          </button>
+        </div>
+      </div>
+    `;
   }
 }
+
+function toggleMoreTools(e) {
+  if (e) e.stopPropagation();
+  const m = $('#more-tools-menu');
+  if (m) m.classList.toggle('show');
+}
+
+function openCaseTool(tab) {
+  const m = $('#more-tools-menu');
+  if (m) m.classList.remove('show');
+  if (!S.cases || !S.cases.length) {
+    showToast('Create or open a case first');
+    S.view = 'cases';
+    render();
+    return;
+  }
+  const curCase = gc(S.cur) || S.cases[0];
+  S.cur = curCase.id;
+  curCase.tab = tab;
+  S.view = 'case';
+  render();
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#more-tools-wrap')) {
+    const m = $('#more-tools-menu');
+    if (m) m.classList.remove('show');
+  }
+});
+
 
 const caseCard = c => {
   const s = stateOf(c.events);
@@ -826,9 +952,9 @@ V.landing = () => `
   <h3 style="margin-top:0">Immediate Official Helplines (India)</h3>
   <p class="sm mu">Official assistance is always available if you feel in physical danger:</p>
   <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:12px">
-    <span>🚨 <b>112</b> Emergency</span>
-    <span>🛡️ <b>181</b> Women Helpline</span>
-    <span>💻 <b>1930</b> Cyber Crime</span>
+    <span><b>112</b> Emergency</span>
+    <span><b>181</b> Women Helpline</span>
+    <span><b>1930</b> Cyber Crime</span>
   </div>
 </div>
 `;
@@ -854,12 +980,12 @@ ${S.cases.length ? S.cases.map(caseCard).join('') : `
 
 <div class="row" style="margin-top:24px">
   <div class="card">
-    <h3>🔒 Private & Secure</h3>
+    <h3>Private & Secure</h3>
     <p class="mu sm">All data remains on this device. We do not track you or forward anything without your permission.</p>
     <button class="btn sm" data-v="privacy">Privacy settings</button>
   </div>
   <div class="card soft">
-    <h3>🆘 In Danger?</h3>
+    <h3>In Immediate Danger?</h3>
     <p class="mu sm">If you feel unsafe right now, call emergency authorities directly.</p>
     <a href="tel:112" class="help-number">Dial 112</a>
     <div style="margin-top:8px">
@@ -961,11 +1087,11 @@ V.add = () => {
 // 4. Case Workspace with 5 Clean Tabs:
 // [Saved Proof] [What Changed?] [Timeline] [Connected Info] [What To Do / Report]
 const caseTabs = [
-  ['proof', '🛡️ Saved Proof'],
-  ['new', '⚡ What Changed?'],
-  ['story', '📖 Timeline'],
-  ['link', '🔗 Connected Info'],
-  ['todo', '✅ What To Do']
+  ['proof', 'Saved Proof'],
+  ['new', 'What Changed?'],
+  ['story', 'Timeline'],
+  ['link', 'Connected Info'],
+  ['todo', 'What To Do']
 ];
 
 const CT = {};
@@ -978,14 +1104,14 @@ function proofItem(c, e, i) {
     : e.dataUrl && (e.type === 'audio' || (e.ftype && e.ftype.startsWith('audio')))
     ? `<audio controls src="${e.dataUrl}" style="margin:10px 0;width:100%"></audio>`
     : e.fname
-    ? `<p style="margin:8px 0">📎 <b>${esc(e.fname)}</b></p>`
+    ? `<p style="margin:8px 0"><b>${esc(e.fname)}</b></p>`
     : '';
 
   return `
   <div class="card" style="margin-bottom:14px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <div>
-        <b>${t[1]} ${t[2]}</b>
+        <b>${t[2]}</b>
         <span class="mu sm">· ${e.ts}${e.from !== 'Unknown sender' ? ' · from ' + esc(e.from) : ''}</span>
       </div>
       <button class="btn danger sm" data-del="${c.id}:${i}">Delete</button>
@@ -1000,7 +1126,7 @@ function proofItem(c, e, i) {
     ` : ''}
 
     ${S.priv.blur && (e.text || e.dataUrl) ? `
-      <p class="sm mu" style="margin:4px 0">🔒 Tap content above to show or blur.</p>
+      <p class="sm mu" style="margin:4px 0">Tap content above to show or blur.</p>
     ` : ''}
 
     <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--ln-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
@@ -1089,7 +1215,7 @@ CT.story = c => `
       <div class="it L${l}">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <b>Day ${e.day}</b>
-          <span class="pill L1" style="font-size:0.75rem">${TI(e.type)[1]} ${TI(e.type)[2]}</span>
+          <span class="pill L1" style="font-size:0.75rem">${TI(e.type)[2]}</span>
         </div>
         <div class="sm bold" style="margin-top:3px">${e.sig.length ? e.sig.map(s => SIG[s.k]).join(', ') : 'Proof saved'}</div>
         <div class="mu sm" style="margin-top:4px">
@@ -1156,7 +1282,7 @@ CT.link = c => {
   return `
   <!-- Related Accounts -->
   <div class="card">
-    <h3>🔗 Accounts That May Be Connected</h3>
+    <h3>Accounts That May Be Connected</h3>
     ${k ? `
       <div class="card soft" style="margin-top:10px">
         <b>Possible connection noticed:</b>
@@ -1177,7 +1303,7 @@ CT.link = c => {
 
   <!-- Exposure Map -->
   <div class="card">
-    <h3>🌐 What Others Could Piece Together</h3>
+    <h3>What Others Could Piece Together</h3>
     <p class="mu sm" style="margin-bottom:14px">
       This map shows how public details might connect, based strictly on what was mentioned in this case.
       <span style="color:var(--a);font-weight:700">Dotted orange bubbles</span> = mentioned in messages.
@@ -1348,7 +1474,7 @@ V.help = () => `
       <h3 style="margin:0">112 — Police, Medical & Fire</h3>
       <p class="sm mu">24/7 National Emergency Toll-Free Hotline</p>
     </div>
-    <a href="tel:112" class="btn p" style="font-size:1.1rem;padding:10px 24px">📞 Call 112</a>
+    <a href="tel:112" class="btn p" style="font-size:1.1rem;padding:10px 24px">Call 112</a>
   </div>
 </div>
 
@@ -1357,14 +1483,14 @@ V.help = () => `
     <span class="sm mu bold">CRISIS COUNSELING & HARASSMENT</span>
     <h3>181 — Women Helpline</h3>
     <p class="sm mu">24/7 confidential support for stalking, harassment, and crisis assistance.</p>
-    <a href="tel:181" class="btn q sm" style="margin-top:8px">📞 Call 181</a>
+    <a href="tel:181" class="btn q sm" style="margin-top:8px">Call 181</a>
   </div>
 
   <div class="card">
     <span class="sm mu bold">CYBER HARASSMENT & BLACKMAIL</span>
     <h3>1930 — Cyber Crime Helpline</h3>
     <p class="sm mu">National helpline for cyberstalking, NCII, and online blackmail (cybercrime.gov.in).</p>
-    <a href="tel:1930" class="btn q sm" style="margin-top:8px">📞 Call 1930</a>
+    <a href="tel:1930" class="btn q sm" style="margin-top:8px">Call 1930</a>
   </div>
 </div>
 
@@ -1372,7 +1498,7 @@ ${S.profile.helper ? `
 <div class="card">
   <h3>Someone You Trust</h3>
   <p class="sm mu">${esc(S.profile.helper)} is listed as your personal trusted contact.</p>
-  ${S.profile.phone ? `<a href="tel:${esc(S.profile.phone)}" class="btn p sm" style="margin-top:6px">📞 Call ${esc(S.profile.phone)}</a>` : ''}
+  ${S.profile.phone ? `<a href="tel:${esc(S.profile.phone)}" class="btn p sm" style="margin-top:6px">Call ${esc(S.profile.phone)}</a>` : ''}
 </div>` : ''}
 
 <div class="card">
@@ -1409,7 +1535,7 @@ V.privacy = () => `
 <div class="card" style="border-color:var(--rs)">
   <h3 style="color:var(--r)">Erase All Data</h3>
   <p class="sm mu">Permanently delete all cases, screenshots, audio notes, and settings immediately.</p>
-  <button class="btn danger" data-act="delall" style="margin-top:8px">🗑️ Delete All Data Permanently</button>
+  <button class="btn danger" data-act="delall" style="margin-top:8px">Delete All Data Permanently</button>
 </div>
 `;
 
@@ -1457,11 +1583,19 @@ V.profile = () => {
 };
 
 // Theme Management
+const moonSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+const sunSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`;
+
 function applyTheme() {
-  const t = S.profile.theme;
-  document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light';
-  const b = $('#theme');
-  if (b) b.textContent = t === 'dark' ? '☀' : '🌙';
+  const t = S.profile.theme || 'light';
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('aegis_theme', t); } catch (e) {}
+  const icon = $('#theme-icon');
+  const text = $('#theme-text');
+  if (icon) icon.innerHTML = t === 'dark' ? sunSvg : moonSvg;
+  if (text) text.textContent = t === 'dark' ? 'Day' : 'Night';
+  const btn = $('#theme');
+  if (btn) btn.setAttribute('title', `Switch to ${t === 'dark' ? 'light' : 'dark'} mode`);
 }
 
 function render() {
@@ -1618,13 +1752,24 @@ document.addEventListener('input', e => {
 });
 
 // Initialize
+try {
+  const savedTheme = localStorage.getItem('aegis_theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    S.profile.theme = savedTheme;
+  }
+} catch (e) {}
+
 initDefaultCases();
 applyTheme();
-$('#theme').onclick = () => {
-  S.profile.theme = S.profile.theme === 'dark' ? 'light' : 'dark';
-  applyTheme();
-  if (S.view === 'profile') render();
-};
+
+const themeBtn = $('#theme');
+if (themeBtn) {
+  themeBtn.onclick = () => {
+    S.profile.theme = S.profile.theme === 'dark' ? 'light' : 'dark';
+    applyTheme();
+    if (S.view === 'profile') render();
+  };
+}
 render();
 </script>
 </body>

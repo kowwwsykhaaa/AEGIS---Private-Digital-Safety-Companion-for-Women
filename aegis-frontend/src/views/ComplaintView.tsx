@@ -88,24 +88,24 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       {/* Editorial Header */}
       <div>
-        <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+        <div className="flex items-center space-x-2 text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
           <span>Ready to File</span>
           <span>·</span>
           <span>Official Report Pack</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--text-primary)] mt-1">
           Prepare Official Report Pack
         </h1>
-        <p className="text-sm text-warm-600 mt-1">
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
           Organizes your timeline, proof items with safety stamps, and sender accounts into a formal statement ready for cybercrime.gov.in or local police stations.
         </p>
       </div>
 
       {/* Strict Privacy & Action Banner */}
-      <div className="bg-warm-100 rounded-2xl border border-warm-300 p-5 flex items-start space-x-3">
-        <Info className="w-5 h-5 text-warm-600 shrink-0 mt-0.5" />
-        <div className="text-xs text-warm-800 leading-relaxed">
-          <strong className="font-bold block text-warm-900 mb-0.5">
+      <div className="bg-[var(--bg-card-subtle)] rounded-2xl border border-[var(--border-color)] p-5 flex items-start space-x-3">
+        <Info className="w-5 h-5 text-[var(--text-muted)] shrink-0 mt-0.5" />
+        <div className="text-xs text-[var(--text-secondary)] leading-relaxed">
+          <strong className="font-bold block text-[var(--text-primary)] mb-0.5">
             You Remain in Full Control
           </strong>
           {pack.disclaimer} You can edit your personal statement, review every statutory section, and copy or download the file when you are ready to file independently.
@@ -114,33 +114,33 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
 
       {/* Interactive Statement & Suspect Editor */}
       <div className="card-warm p-6 space-y-4">
-        <div className="flex items-center space-x-2 text-xs font-bold text-warm-600 uppercase tracking-wider">
-          <Edit3 className="w-4 h-4 text-warm-500" />
+        <div className="flex items-center space-x-2 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+          <Edit3 className="w-4 h-4 text-[var(--text-muted)]" />
           <span>Customize Your Complainant Statement</span>
         </div>
 
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-medium text-warm-700 mb-1">
+            <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1">
               Your Incident Statement
             </label>
             <textarea
               rows={3}
               value={userStatement}
               onChange={(e) => setUserStatement(e.target.value)}
-              className="w-full rounded-xl border border-warm-300 px-3.5 py-2.5 text-xs text-charcoal bg-white focus:outline-none focus:ring-2 focus:ring-aegis-rose-accent/40"
+              className="w-full rounded-xl border border-[var(--border-color)] px-3.5 py-2.5 text-xs text-[var(--text-primary)] bg-[var(--bg-input)] focus:outline-none focus:ring-2 focus:ring-aegis-rose-accent/40"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-warm-700 mb-1">
+            <label className="block text-xs font-medium text-[var(--text-secondary)] mb-1">
               Suspect Handles / Identifiers
             </label>
             <input
               type="text"
               value={suspectIdentifiers}
               onChange={(e) => setSuspectIdentifiers(e.target.value)}
-              className="w-full rounded-xl border border-warm-300 px-3.5 py-2 text-xs text-charcoal bg-white focus:outline-none focus:ring-2 focus:ring-aegis-rose-accent/40"
+              className="w-full rounded-xl border border-[var(--border-color)] px-3.5 py-2 text-xs text-[var(--text-primary)] bg-[var(--bg-input)] focus:outline-none focus:ring-2 focus:ring-aegis-rose-accent/40"
             />
           </div>
 
@@ -148,7 +148,7 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
             <button
               onClick={handleUpdateDossier}
               disabled={isUpdating}
-              className="bg-warm-100 hover:bg-warm-200 text-warm-800 border border-warm-300 px-4 py-2 rounded-full text-xs font-bold transition-colors"
+              className="bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] text-[var(--text-primary)] border border-[var(--border-color)] px-4 py-2 rounded-full text-xs font-bold transition-colors"
             >
               {isUpdating ? "Updating..." : "Update Report Text"}
             </button>
@@ -158,17 +158,17 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
 
       {/* Statutory Legal Sections (India) */}
       <div className="card-warm p-6 space-y-4">
-        <div className="flex items-center space-x-2 text-xs font-bold text-warm-600 uppercase tracking-wider">
-          <Scale className="w-4 h-4 text-warm-500" />
+        <div className="flex items-center space-x-2 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+          <Scale className="w-4 h-4 text-[var(--text-muted)]" />
           <span>Applicable Indian Statutory Sections</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {pack.legal_provisions.map((sec, idx) => (
-            <div key={idx} className="p-3.5 rounded-xl bg-warm-50 border border-warm-200 space-y-1 text-xs">
-              <span className="font-bold text-warm-900 block">{sec.act} — {sec.section}</span>
-              <span className="font-semibold text-warm-700 block text-[11px]">{sec.offense}</span>
-              <p className="text-warm-600 text-[11px] leading-relaxed font-normal">{sec.description}</p>
+            <div key={idx} className="p-3.5 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] space-y-1 text-xs">
+              <span className="font-bold text-[var(--text-primary)] block">{sec.act} — {sec.section}</span>
+              <span className="font-semibold text-[var(--text-secondary)] block text-[11px]">{sec.offense}</span>
+              <p className="text-[var(--text-secondary)] text-[11px] leading-relaxed font-normal">{sec.description}</p>
             </div>
           ))}
         </div>
@@ -176,12 +176,12 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
 
       {/* Generated Dossier Preview & Export */}
       <div className="card-warm p-6 sm:p-8 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-warm-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[var(--border-color)]">
           <div>
-            <span className="text-xs font-bold text-warm-500 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
               Report Output
             </span>
-            <h2 className="text-lg font-bold text-charcoal mt-0.5">
+            <h2 className="text-lg font-bold text-[var(--text-primary)] mt-0.5">
               Structured Complaint Report (National Cyber Crime Format)
             </h2>
           </div>
@@ -189,16 +189,16 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
           <div className="flex items-center space-x-2">
             <button
               onClick={copyDossier}
-              className="flex items-center space-x-1.5 text-xs text-warm-800 bg-white hover:bg-warm-100 px-4 py-2 rounded-full border border-warm-300 transition-colors font-bold shadow-sm"
+              className="flex items-center space-x-1.5 text-xs text-[var(--text-primary)] bg-[var(--bg-card-subtle)] hover:bg-[var(--border-color)] px-4 py-2 rounded-full border border-[var(--border-color)] transition-colors font-bold shadow-sm"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-aegis-sage-accent" />
+                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Copied</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-warm-600" />
+                  <Copy className="w-3.5 h-3.5 text-[var(--text-muted)]" />
                   <span>Copy Text</span>
                 </>
               )}
@@ -214,16 +214,16 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
           </div>
         </div>
 
-        <div className="bg-warm-50 p-4 rounded-xl border border-warm-200 font-mono text-xs text-warm-900 whitespace-pre-wrap leading-relaxed max-h-96 overflow-y-auto select-all">
+        <div className="bg-[var(--bg-card-subtle)] p-4 rounded-xl border border-[var(--border-color)] font-mono text-xs text-[var(--text-primary)] whitespace-pre-wrap leading-relaxed max-h-96 overflow-y-auto select-all">
           {pack.formatted_dossier_text}
         </div>
 
         {/* Portal submission guidance */}
-        <div className="p-4 rounded-xl bg-warm-100/70 border border-warm-300 text-xs text-warm-800 space-y-1">
-          <strong className="font-bold block text-warm-900">
+        <div className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs text-[var(--text-secondary)] space-y-1">
+          <strong className="font-bold block text-[var(--text-primary)]">
             How to Submit on cybercrime.gov.in:
           </strong>
-          <p>1. Open <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" className="underline font-bold text-charcoal">cybercrime.gov.in</a> or dial <strong>1930</strong>.</p>
+          <p>1. Open <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" className="underline font-bold text-[var(--text-primary)]">cybercrime.gov.in</a> or dial <strong>1930</strong>.</p>
           <p>2. Select "Report Women/Child Related Crime" ➔ "Cyber Stalking / Blackmailing".</p>
           <p>3. Paste the report text above into the complaint details box and attach original screenshots.</p>
         </div>
