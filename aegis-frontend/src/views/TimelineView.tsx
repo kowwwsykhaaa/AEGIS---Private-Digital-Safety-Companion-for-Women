@@ -1,0 +1,129 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Clock, FileText, Lock, Eye, AlertCircle, ArrowUpRight, Plus } from 'lucide-react';
+import { IncidentData } from '../lib/api';
+
+interface TimelineViewProps {
+  incident: IncidentData | null;
+}
+
+export const TimelineView: React.FC<TimelineViewProps> = ({ incident }) => {
+  const navigate = useNavigate();
+
+  if (!incident || !incident.events || incident.events.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-warm-600">
+        <p className="font-bold text-lg">No timeline events logged yet.</p>
+      </div>
+    );
+  }
+
+  const sortedEvents = [...incident.events].sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
+
+  return (
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center space-x-2 text-xs font-semibold text-warm-500 uppercase tracking-wider">
+            <span>Order of Events</span>
+            <span>·</span>
+            <span>Case Timeline</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+            Case Timeline
+          </h1>
+          <p className="text-sm text-warm-600 mt-1">
+            Every recorded message, voice note, and screenshot ordered chronologically with its saved date and safety stamp.
+          </p>
+        </div>
+
+        <button
+          onClick={() => navigate('/analyze')}
+          className="bg-aegis-rose-accent hover:bg-aegis-rose-hover text-white px-5 py-2.5 rounded-full text-xs font-bold self-start shadow-sm transition-all flex items-center space-x-1.5"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add Proof</span>
+        </button>
+      </div>
+
+      {/* Timeline Stream */}
+      <div className="relative border-l-2 border-warm-300 ml-4 pl-6 space-y-6">
+        {sortedEvents.map((evt, idx) => {
+          const isCoercion = evt.stage === 'COERCION';
+          const isIntimidation = evt.stage === 'INTIMIDATION';
+
+          return (
+            <div key={evt.id} className="relative">
+              {/* Timeline marker */}
+              <div className={`absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-2 bg-white flex items-center justify-center ${
+                isCoercion
+                  ? 'border-aegis-rose-accent bg-aegis-rose-light'
+                  : isIntimidation
+                  ? 'border-aegis-amber-accent bg-aegis-amber-light'
+                  : 'border-warm-400 bg-warm-100'
+              }`}>
+                <div className={`w-1.5 h-1.5 rounded-full ${
+                  isCoercion ? 'bg-aegis-rose-accent' : isIntimidation ? 'bg-aegis-amber-accent' : 'bg-warm-600'
+                }`} />
+              </div>
+
+              {/* Event Card */}
+              <div className="card-warm p-5 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-warm-200">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs uppercase tracking-wider font-extrabold text-warm-500">
+                      Day 0{idx + 1}
+                    </span>
+                    <span>·</span>
+                    <span className="text-xs text-warm-700 font-bold">
+                      {new Date(evt.timestamp).toLocaleDateString()}
+                    </span>
+                    <span>·</span>
+                    <span className="text-xs font-mono text-warm-700 bg-warm-100 px-2 py-0.5 rounded-md border border-warm-200">
+                      {evt.account_handle || 'Unknown Account'}
+                    </span>
+                  </div>
+
+                  <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border self-start ${
+                    isCoercion
+                      ? 'bg-aegis-rose-light text-aegis-rose-text border-aegis-rose-border'
+                      : isIntimidation
+                      ? 'bg-aegis-amber-light text-aegis-amber-text border-aegis-amber-border'
+                      : 'bg-warm-100 text-warm-800 border-warm-300'
+                  }`}>
+                    {evt.stage.replace(/_/g, ' ')}
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="font-bold text-sm text-charcoal">
+                    {evt.summary}
+                  </div>
+                  <div className="p-3 rounded-xl bg-warm-50 border border-warm-200 text-xs text-warm-800 font-sans leading-relaxed">
+                    "{evt.raw_content}"
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] text-warm-500 pt-1">
+                  <span>Platform: {evt.source_platform}</span>
+                  {evt.evidence_id && (
+                    <button
+                      onClick={() => navigate('/vault')}
+                      className="font-mono text-aegis-rose-text hover:underline flex items-center space-x-1"
+                    >
+                      <span>Item #{evt.evidence_id.slice(0, 8)}</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

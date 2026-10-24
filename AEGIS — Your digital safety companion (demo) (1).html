@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AEGIS — Your digital safety companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBF6F3;
+  --card: #FFFFFF;
+  --card-hover: #FFF9F7;
+  --ln: #EADFDB;
+  --ln-soft: #F3EBE8;
+  --tx: #3A2F33;
+  --tx-soft: #5E5055;
+  --mu: #827378;
+  --ac: #B4587A;
+  --ac-hover: #9E4666;
+  --acs: #F7E6EC;
+  --acs-soft: #FCF5F8;
+  --g: #2D7A58;
+  --gs: #E5F4EC;
+  --a: #A0680A;
+  --as: #FBF0D9;
+  --r: #B83226;
+  --rs: #FBE1DE;
+  --b: #326E9C;
+  --bs: #E3EEF7;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 3px 12px rgba(120, 80, 95, 0.06);
+  --shadow-lg: 0 8px 28px rgba(120, 80, 95, 0.1);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #1A1517;
+  --card: #261F22;
+  --card-hover: #2D2529;
+  --ln: #3D3237;
+  --ln-soft: #30272B;
+  --tx: #F2E8EB;
+  --tx-soft: #D7CBD0;
+  --mu: #AFA0A6;
+  --ac: #E28FA8;
+  --ac-hover: #F0A6BC;
+  --acs: #3E2732;
+  --acs-soft: #2D1D24;
+  --g: #56B88B;
+  --gs: #193327;
+  --a: #E8B452;
+  --as: #382C17;
+  --r: #F27B72;
+  --rs: #3B1C1B;
+  --b: #73AEE0;
+  --bs: #1B2E3F;
+  --shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font: 16px/1.6 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1.5px solid var(--ln);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+[data-theme="dark"] header {
+  background: rgba(38, 31, 34, 0.95);
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.brand {
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--ac);
+  letter-spacing: 0.05em;
+}
+.brand-sub {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--mu);
+  display: none;
+}
+@media (min-width: 640px) { .brand-sub { display: inline; } }
+
+#nav {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#nav::-webkit-scrollbar { display: none; }
+
+#nav button {
+  all: unset;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 24px;
+  color: var(--mu);
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+#nav button:hover {
+  background: var(--acs-soft);
+  color: var(--ac);
+}
+#nav button.on {
+  background: var(--acs);
+  color: var(--ac);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: var(--card);
+  border: 1.5px solid var(--ln);
+  color: var(--tx);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: border-color 0.15s;
+}
+.icon-btn:hover { border-color: var(--ac); }
+
+.av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ac);
+  color: #fff;
+  font: 800 0.95rem 'Nunito', sans-serif;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+.av:hover { transform: scale(1.05); }
+
+/* Main Container */
+main {
+  flex: 1;
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 18px 80px;
+}
+
+/* Typography */
+h1 { font-size: 2.1rem; font-weight: 800; line-height: 1.25; margin-bottom: 0.4em; color: var(--tx); }
+h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; margin: 1.1em 0 0.5em; color: var(--tx); }
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1.15rem; font-weight: 700; margin: 0.7em 0 0.4em; color: var(--tx); }
+p { margin: 0.5em 0; color: var(--tx-soft); }
+.mu { color: var(--mu); }
+.sm { font-size: 0.88rem; }
+.bold { font-weight: 700; }
+
+/* Cards & Layout */
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+}
+.card.soft {
+  background: var(--acs-soft);
+  border-color: var(--acs);
+}
+.card.clickable {
+  cursor: pointer;
+}
+.card.clickable:hover {
+  border-color: var(--ac);
+  transform: translateY(-1px);
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.row > * {
+  flex: 1 1 240px;
+  margin-bottom: 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  background: var(--card);
+  color: var(--tx);
+  border: 1.5px solid var(--ln);
+  padding: 10px 18px;
+  border-radius: 24px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.94rem;
+  margin: 4px 4px 4px 0;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+.btn:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.btn.p {
+  background: var(--ac);
+  border-color: var(--ac);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(180, 88, 122, 0.25);
+}
+.btn.p:hover {
+  background: var(--ac-hover);
+  border-color: var(--ac-hover);
+  color: #fff;
+}
+.btn.q {
+  background: var(--acs);
+  border-color: var(--acs);
+  color: var(--ac);
+}
+.btn.q:hover {
+  background: var(--acs-soft);
+  border-color: var(--ac);
+}
+.btn.sm {
+  padding: 6px 14px;
+  font-size: 0.84rem;
+  border-radius: 18px;
+}
+.btn.danger {
+  color: var(--r);
+  border-color: var(--rs);
+  background: var(--rs);
+}
+.btn.danger:hover {
+  background: var(--r);
+  color: #fff;
+  border-color: var(--r);
+}
+
+/* Status Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.84rem;
+}
+.pill:before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.L0 { background: var(--gs); color: var(--g); }
+.L1 { background: var(--bs); color: var(--b); }
+.L2 { background: var(--as); color: var(--a); }
+.L3 { background: var(--rs); color: var(--r); }
+
+/* Timeline */
+.tl {
+  border-left: 2.5px solid var(--ln);
+  margin: 16px 0 20px 10px;
+  padding-left: 22px;
+  position: relative;
+}
+.tl .it {
+  position: relative;
+  margin-bottom: 22px;
+}
+.tl .it:last-child { margin-bottom: 0; }
+.tl .it:before {
+  content: "";
+  position: absolute;
+  left: -29.5px;
+  top: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 3px solid var(--ln);
+}
+.tl .it.L3:before { border-color: var(--r); background: var(--rs); }
+.tl .it.L2:before { border-color: var(--a); background: var(--as); }
+.tl .it.L1:before { border-color: var(--b); background: var(--bs); }
+.tl .it.L0:before { border-color: var(--g); background: var(--gs); }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tabs button {
+  cursor: pointer;
+  border: 1.5px solid var(--ln);
+  background: var(--card);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--mu);
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.tabs button:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.tabs button.on {
+  background: var(--ac);
+  border-color: var(--ac);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(180, 88, 122, 0.2);
+}
+
+/* Forms */
+textarea, select, input.in {
+  width: 100%;
+  background: var(--card);
+  color: var(--tx);
+  border: 1.5px solid var(--ln);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+textarea:focus, select:focus, input.in:focus {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 3px var(--acs);
+}
+textarea { min-height: 110px; resize: vertical; }
+
+label.sm { display: block; margin-bottom: 6px; font-weight: 700; }
+label.t {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 8px 0;
+  cursor: pointer;
+}
+label.t input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--ac);
+  cursor: pointer;
+}
+
+/* Before / After box */
+.ba {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+.ba-box {
+  background: var(--bg);
+  border: 1.5px solid var(--ln);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+.ba-arrow { color: var(--mu); font-weight: 800; font-size: 1.2rem; }
+.chg { padding: 12px 0; border-bottom: 1.5px solid var(--ln-soft); }
+.chg:last-child { border-bottom: none; }
+
+/* Sensitive Blur */
+.blur-content {
+  filter: blur(8px);
+  user-select: none;
+  cursor: pointer;
+  transition: filter 0.25s ease;
+  background: var(--bg);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  display: inline-block;
+  margin: 6px 0;
+}
+.blur-content.show {
+  filter: none;
+  user-select: text;
+  background: transparent;
+}
+
+/* SVG Graph */
+svg text { fill: var(--tx); font: 700 13px 'Nunito', sans-serif; }
+.node { cursor: pointer; }
+.node rect { fill: var(--card); stroke: var(--ln); stroke-width: 2; transition: all 0.2s; }
+.node:hover rect { stroke: var(--ac); }
+.node.inf rect { stroke: var(--a); stroke-dasharray: 4 3; fill: var(--as); }
+.node.sel rect { stroke: var(--ac); stroke-width: 3; fill: var(--acs); }
+line { stroke: var(--ln); stroke-width: 2; stroke-linecap: round; }
+
+/* Quick Exit & Stealth Cover */
+#qe {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+  font-size: 0.92rem;
+  padding: 12px 20px;
+}
+#cover {
+  position: fixed;
+  inset: 0;
+  background: #FFFFFF;
+  color: #333333;
+  z-index: 999;
+  display: none;
+  padding: 40px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+  overflow-y: auto;
+}
+.cover-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#toast {
+  position: fixed;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--tx);
+  color: var(--bg);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+#toast.show {
+  display: block;
+  opacity: 1;
+}
+
+.stamp {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--mu);
+  background: var(--bg);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--ln-soft);
+  word-break: break-all;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+ol, ul { padding-left: 20px; margin: 8px 0; }
+li { margin-bottom: 8px; color: var(--tx-soft); }
+
+.help-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ac);
+  text-decoration: none;
+  display: block;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand-wrap" data-v="landing">
+    <span class="brand">AEGIS</span>
+    <span class="brand-sub">Your digital safety companion</span>
+  </a>
+  <div id="nav"></div>
+  <div class="header-right">
+    <button class="icon-btn" id="theme" aria-label="Toggle theme">☀</button>
+    <button class="av" id="av" data-v="profile" aria-label="My profile">A</button>
+  </div>
+</header>
+
+<button class="btn p" id="qe" title="Instantly hide this application (Shortcut: Esc)">
+  🛡️ Quick Exit <span class="sm mu" style="color:rgba(255,255,255,0.7);font-size:0.75rem;margin-left:4px">Esc</span>
+</button>
+
+<div id="cover">
+  <div class="cover-inner">
+    <h2 style="font-weight:600;margin-bottom:8px">Daily Tasks & Notes</h2>
+    <p style="color:#666;font-size:0.9rem;margin-bottom:20px">Personal study notes · Saturday</p>
+    <div style="background:#f5f5f5;padding:16px;border-radius:12px;margin-bottom:14px">
+      <p style="font-weight:600;margin-bottom:6px">Study To-Dos</p>
+      <p style="color:#555">• Review database lecture slides</p>
+      <p style="color:#555">• Complete lab report assignment</p>
+      <p style="color:#555">• Return library books</p>
+    </div>
+    <div style="background:#f5f5f5;padding:16px;border-radius:12px">
+      <p style="font-weight:600;margin-bottom:6px">Weekly Schedule</p>
+      <p style="color:#555">• Mon 10:00 AM: Signals lecture</p>
+      <p style="color:#555">• Wed 02:00 PM: Project lab sync</p>
+    </div>
+    <p style="margin-top:40px;color:#999;font-size:0.8rem;text-align:center">(Tap anywhere to return to AEGIS)</p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<main id="main"></main>
+
+<script>
+// Data & Rules
+const LV = ['Low worry', 'Needs attention', 'Serious', 'Very serious'];
+const SIG = {
+  contact: 'Unwanted contact',
+  persist: 'Repeated messages',
+  pii: 'Mentions where you study or live',
+  intim: 'Intimidating words',
+  coerce: 'Demands with a threat to expose you'
+};
+const RULES = [
+  ['contact', /cute|hey|hello|dm me|smile/i],
+  ['persist', /why aren.t you replying|answer me|reply to me|ignor/i],
+  ['pii', /where you (study|live)|know where you live|your (college|address|hostel)/i],
+  ['intim', /know where you live|watching you|regret|can.t hide|find you/i],
+  ['coerce', /expose|leak|will see everything|send (the )?(photos|pics)|pay|transfer/i]
+];
+const REASON = {
+  contact: 'Someone you don\'t know well reached out without an invitation.',
+  persist: 'They kept messaging even after you didn\'t reply.',
+  pii: 'They asked about or claimed to know where you study or live.',
+  intim: 'The words imply they know where you are or want to scare you.',
+  coerce: 'They are making demands and threatening to share private things about you.'
+};
+const TYPES = [
+  ['screenshot', '📸', 'Screenshot'],
+  ['audio', '🎧', 'Audio Note'],
+  ['message', '💬', 'Message'],
+  ['link', '🔗', 'Link or Profile'],
+  ['note', '📝', 'Personal Note'],
+  ['file', '📎', 'Other File']
+];
+const TI = t => TYPES.find(x => x[0] === t) || TYPES[0];
+
+const $ = s => document.querySelector(s);
+const esc = t => String(t || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>', '&gt;', '"': '&quot;' }[c]));
+
+let nid = 1;
+let S = {
+  profile: { name: 'Ananya', helper: '', phone: '', disguise: false, theme: 'light' },
+  view: 'landing', // Landing page first!
+  cases: [],
+  cur: null,
+  pending: null,
+  sel: null,
+  rep: null,
+  priv: { blur: true, ret: '30' },
+  sec: { sum: 1, tl: 1, ind: 1, ev: 1, conn: 1, stmt: 1 },
+  stmt: '',
+  draft: { type: 'screenshot', text: '', from: '', target: '', name: '', file: null, dataUrl: null }
+};
+
+const gc = id => S.cases.find(c => c.id === id);
+
+function detect(t) {
+  return RULES.filter(r => r[1].test(t)).map(r => ({ k: r[0], m: (t.match(r[1]) || [''])[0] }));
+}
+
+function lvl(set) {
+  return set.has('coerce') ? 3 : (set.has('intim') || set.has('pii')) ? 2 : set.has('persist') ? 1 : 0;
+}
+
+function stateOf(evs) {
+  const s = new Set(evs.flatMap(e => e.sig.map(x => x.k)));
+  return {
+    sigs: s,
+    lvl: lvl(s),
+    acc: new Set(evs.map(e => e.from).filter(x => x && x !== 'Unknown sender'))
+  };
+}
+
+async function sha(x) {
+  try {
+    const b = await crypto.subtle.digest('SHA-256', typeof x === 'string' ? new TextEncoder().encode(x) : x);
+    return [...new Uint8Array(b)].map(v => v.toString(16).padStart(2, '0')).join('');
+  } catch (e) {
+    return 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+  }
+}
+
+function showToast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function mk(e) {
+  const o = { ...e, sig: detect(e.text || ''), ts: 'Day ' + e.day, hash: 'Calculating…' };
+  if (e.file) {
+    o.fname = e.file.name;
+    o.ftype = e.file.type;
+    o.dataUrl = e.dataUrl || URL.createObjectURL(e.file);
+    e.file.arrayBuffer().then(sha).then(h => { o.hash = h; render(); });
+  } else {
+    sha(e.day + '|' + e.from + '|' + e.text).then(h => { o.hash = h; render(); });
+  }
+  return o;
+}
+
+function newCase(name, evs) {
+  const c = { id: nid++, name, events: [], changes: null, tab: 'proof' };
+  evs.forEach(e => c.events.push(mk(e)));
+  S.cases.push(c);
+  return c;
+}
+
+function initDefaultCases() {
+  S.cases = [];
+  nid = 1;
+  // Pre-seed realistic case
+  newCase('Harassment from @unknown_user01', [
+    { day: 1, type: 'message', from: '@unknown_user01', text: "Hey, you're cute." },
+    { day: 3, type: 'message', from: '@unknown_user01', text: "Why aren't you replying?" },
+    { day: 5, type: 'message', from: '@unknown_user01', text: "Tell me where you study." },
+    { day: 6, type: 'message', from: '@unknown_user01', text: "I know where you live." }
+  ]);
+}
+
+function links(c) {
+  const a = [...stateOf(c.events).acc];
+  if (a.length < 2) return null;
+  const d = x => x.replace(/[^a-z0-9]/gi, '').toLowerCase(), p = a[0], q = a[1], sg = [];
+  if (d(p) === d(q)) sg.push(['Very similar usernames', 'Matching sequence with underscore modification: ' + p + ' and ' + q + '.']);
+  const f = c.events.find(e => e.from === q), l = c.events.filter(e => e.from === p).slice(-1)[0];
+  if (f && l && Math.abs(f.day - l.day) <= 1) sg.push(['Timing pattern', 'The new account wrote within a day of the first account.']);
+  if (f && l && f.sig.some(s => s.k === 'coerce') && l.sig.some(s => s.k === 'coerce')) sg.push(['Repeated threat words', 'Both accounts make demands paired with threats of exposure.']);
+  const tx = c.events.map(e => e.text).join(' ');
+  if (/college|study/i.test(tx) && f && /college|study/i.test(f.text)) sg.push(['Same target topic', 'Both accounts probe your college campus.']);
+  return sg.length ? { a: p, b: q, sg } : null;
+}
+
+function addEventToCase() {
+  const p = S.pending, d = S.draft;
+  if (!p) return;
+  let c = d.target === 'new' || !gc(+d.target) ? newCase(d.name.trim() || 'New Situation', []) : gc(+d.target);
+  const before = stateOf(c.events);
+  const day = Math.max(0, ...c.events.map(e => e.day)) + 1;
+  const e = mk({ day, type: p.type, from: p.from || 'Unknown sender', text: p.text, file: p.file, dataUrl: p.dataUrl });
+  c.events.push(e);
+  const after = stateOf(c.events), ch = [];
+  after.sigs.forEach(k => {
+    if (!before.sigs.has(k)) ch.push([k === 'coerce' || k === 'intim' ? 'r' : 'a', SIG[k] + ': ' + REASON[k]]);
+  });
+  after.acc.forEach(x => {
+    if (!before.acc.has(x) && before.acc.size) ch.push(['a', 'A new account appeared: ' + x]);
+  });
+  if (links(c) && before.acc.size < 2 && after.acc.size >= 2) ch.push(['y', 'This new account might be connected to ' + [...before.acc][0]]);
+  if (after.lvl > before.lvl) ch.push(['r', 'Situation became more serious: ' + LV[before.lvl] + ' → ' + LV[after.lvl]]);
+  const nw = [...after.sigs].filter(k => !before.sigs.has(k)).map(k => SIG[k].toLowerCase());
+  c.changes = {
+    before: before.lvl,
+    after: after.lvl,
+    items: ch,
+    e,
+    why: nw.length ? 'The latest item shows new things we hadn\'t seen earlier: ' + nw.join(' and ') + '.' + (after.lvl > before.lvl ? ' This moved the situation from "' + LV[before.lvl] + '" to "' + LV[after.lvl] + '".' : '') : 'Item safely saved. No new threats detected; level remains the same.'
+  };
+  S.pending = null;
+  S.draft = { type: 'screenshot', text: '', from: '', target: '', name: '', file: null, dataUrl: null };
+  c.tab = 'proof';
+  S.cur = c.id;
+  S.view = 'case';
+  showToast("Proof added to your case");
+}
+
+const pill = l => `<span class="pill L${l}">${LV[l]}</span>`;
+const dot = c => ({ r: '🔴', a: '🟠', y: '🟡' }[c] || '•');
+
+const NAVI = [
+  ['cases', '📁 My Cases'],
+  ['add', '➕ Add Proof'],
+  ['report', '📋 Report Pack'],
+  ['help', '🆘 Help & Helplines'],
+  ['privacy', '🔒 Privacy']
+];
+
+function nav() {
+  const isLanding = S.view === 'landing';
+  $('#av').textContent = (S.profile.name.trim()[0] || 'A').toUpperCase();
+  $('#av').style.display = isLanding ? 'none' : 'flex';
+  $('.brand').textContent = S.profile.disguise ? 'Notes' : 'AEGIS';
+  document.title = S.profile.disguise ? 'Notes' : 'AEGIS — Your digital safety companion';
+  $('#nav').style.display = isLanding ? 'none' : 'flex';
+  if (isLanding) {
+    $('#nav').innerHTML = '';
+  } else {
+    $('#nav').innerHTML = NAVI.map(i => `<button class="${S.view === i[0] || (i[0] === 'cases' && S.view === 'case') ? 'on' : ''}" data-v="${i[0]}">${i[1]}</button>`).join('');
+  }
+}
+
+const caseCard = c => {
+  const s = stateOf(c.events);
+  const screenshots = c.events.filter(e => e.type === 'screenshot').length;
+  const audio = c.events.filter(e => e.type === 'audio').length;
+  const msgs = c.events.filter(e => e.type === 'message').length;
+
+  return `
+  <div class="card clickable" data-open="${c.id}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px">
+      <h3 style="margin:0">${esc(c.name)}</h3>
+      ${pill(s.lvl)}
+    </div>
+    <p class="mu sm">
+      ${c.events.length} item${c.events.length === 1 ? '' : 's'} saved
+      ${screenshots ? ` · ${screenshots} screenshot${screenshots > 1 ? 's' : ''}` : ''}
+      ${audio ? ` · ${audio} audio` : ''}
+      ${msgs ? ` · ${msgs} text` : ''}
+    </p>
+    ${c.changes ? `<div class="card soft sm" style="margin:12px 0 6px;padding:12px"><b>Latest update:</b> ${esc(c.changes.why)}</div>` : ''}
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn p sm" data-open="${c.id}">Open case</button>
+      <button class="btn q sm" data-addto="${c.id}">+ Add proof</button>
+    </div>
+  </div>`;
+};
+
+const V = {};
+
+// 1. Landing Page (First Impression)
+V.landing = () => `
+<div style="padding:24px 0 36px;text-align:center">
+  <span class="pill L0" style="margin-bottom:14px">Your private digital safety companion</span>
+  <h1>You are not alone.<br>Let's make sense of this together.</h1>
+  <p style="font-size:1.15rem;max-width:560px;margin:12px auto 28px;line-height:1.6" class="mu">
+    When someone bothers, threatens, or blackmails you online, AEGIS helps you understand what is happening, organizes your proof safely, and helps you decide what to do next — calmly and in complete privacy.
+  </p>
+  <div>
+    <button class="btn p" data-v="cases" style="font-size:1.05rem;padding:12px 32px">Open my safety space ➔</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="step-num" style="width:34px;height:34px;border-radius:50%;background:var(--acs);color:var(--ac);display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:8px">1</div>
+    <h3>See the whole picture</h3>
+    <p class="mu sm">One message might seem small. Looking at them together reveals patterns, persistence, and whether things are escalating.</p>
+  </div>
+  <div class="card">
+    <div class="step-num" style="width:34px;height:34px;border-radius:50%;background:var(--acs);color:var(--ac);display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:8px">2</div>
+    <h3>Keep proof safe</h3>
+    <p class="mu sm">Save screenshots, voice notes, and messages with an automatic date and tamper-proof safety stamp.</p>
+  </div>
+  <div class="card">
+    <div class="step-num" style="width:34px;height:34px;border-radius:50%;background:var(--acs);color:var(--ac);display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:8px">3</div>
+    <h3>You are in control</h3>
+    <p class="mu sm">Everything stays on your device. Nothing is ever reported without your command. One-tap wipe and instant Quick Exit (<kbd>Esc</kbd>).</p>
+  </div>
+</div>
+
+<div class="card soft" style="text-align:center;padding:24px;margin-top:8px">
+  <h3 style="margin-top:0">Immediate Official Helplines (India)</h3>
+  <p class="sm mu">Official assistance is always available if you feel in physical danger:</p>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:12px">
+    <span>🚨 <b>112</b> Emergency</span>
+    <span>🛡️ <b>181</b> Women Helpline</span>
+    <span>💻 <b>1930</b> Cyber Crime</span>
+  </div>
+</div>
+`;
+
+// 2. Cases List
+V.cases = () => `
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+  <div>
+    <span class="sm mu bold">YOUR SAFETY CASES</span>
+    <h2>My Cases</h2>
+  </div>
+  <button class="btn p" data-newcase>+ Start a new case</button>
+</div>
+
+<p class="mu sm" style="margin-bottom:20px">A case is one situation — like all messages or screenshots from one person. You can have multiple cases.</p>
+
+${S.cases.length ? S.cases.map(caseCard).join('') : `
+<div class="card" style="text-align:center;padding:40px">
+  <h3>No cases yet</h3>
+  <p class="mu sm">Add anything that worried you and we will help you sort it out calmly.</p>
+  <button class="btn p" data-newcase style="margin-top:12px">+ Start your first case</button>
+</div>`}
+
+<div class="row" style="margin-top:24px">
+  <div class="card">
+    <h3>🔒 Private & Secure</h3>
+    <p class="mu sm">All data remains on this device. We do not track you or forward anything without your permission.</p>
+    <button class="btn sm" data-v="privacy">Privacy settings</button>
+  </div>
+  <div class="card soft">
+    <h3>🆘 In Danger?</h3>
+    <p class="mu sm">If you feel unsafe right now, call emergency authorities directly.</p>
+    <a href="tel:112" class="help-number">Dial 112</a>
+    <div style="margin-top:8px">
+      <button class="btn sm" data-v="help">Helplines (181, 1930)</button>
+    </div>
+  </div>
+</div>
+`;
+
+// 3. Add Proof (Screenshots, Audio, Messages, Links, Notes)
+V.add = () => {
+  const d = S.draft, p = S.pending;
+  if (!d.target) d.target = S.cases.length ? String(S.cases[0].id) : 'new';
+
+  return `
+  <h2>Add proof or notes</h2>
+  <p class="mu sm" style="margin-bottom:18px">You can upload screenshots, voice notes, message text, or personal notes to keep them organized.</p>
+
+  <div class="card">
+    <label class="sm mu">Which case does this belong to?</label>
+    <select id="atarget">
+      ${S.cases.map(c => `<option value="${c.id}" ${d.target == c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}
+      <option value="new" ${d.target === 'new' ? 'selected' : ''}>+ Create a brand new case</option>
+    </select>
+
+    ${d.target === 'new' ? `
+    <div style="margin-top:12px">
+      <label class="sm mu">Name this new case</label>
+      <input id="aname" class="in" placeholder="e.g. Messages from stranger, WhatsApp caller" value="${esc(d.name)}">
+    </div>` : ''}
+
+    <div style="margin-top:18px">
+      <label class="sm mu">What type of proof is it?</label>
+      <div class="tabs">
+        ${TYPES.map(t => `<button class="${d.type === t[0] ? 'on' : ''}" data-ty="${t[0]}">${t[1]} ${t[2]}</button>`).join('')}
+      </div>
+    </div>
+
+    <!-- File Picker for screenshots or audio -->
+    ${d.type === 'screenshot' || d.type === 'audio' || d.type === 'file' ? `
+    <div style="background:var(--bg);padding:16px;border-radius:var(--radius-md);margin-bottom:14px;border:1.5px dashed var(--ln)">
+      <label class="sm mu bold">Upload ${d.type === 'screenshot' ? 'Screenshot Image' : d.type === 'audio' ? 'Audio Recording' : 'File'}</label>
+      <input type="file" id="afile" ${d.type === 'screenshot' ? 'accept="image/*"' : d.type === 'audio' ? 'accept="audio/*"' : ''}>
+      ${d.dataUrl && d.type === 'screenshot' ? `
+        <div style="margin-top:10px">
+          <img src="${d.dataUrl}" alt="Preview" style="max-height:160px;border-radius:8px;border:1px solid var(--ln)">
+        </div>` : ''}
+      <p class="sm mu" style="margin-top:8px">Your file never leaves this device. Describe what is shown or said below so our checker can understand it.</p>
+    </div>` : ''}
+
+    <div>
+      <label class="sm mu">
+        ${d.type === 'screenshot' ? 'What does this screenshot show? (Quote any text or threats)' :
+          d.type === 'audio' ? 'What was said in this audio recording?' :
+          d.type === 'message' ? 'Paste the message text' :
+          d.type === 'link' ? 'Paste the profile link or post URL' :
+          'Write what happened'}
+      </label>
+      <textarea id="atext" placeholder="Type here…">${esc(d.text)}</textarea>
+    </div>
+
+    ${d.type !== 'note' ? `
+    <div style="margin-top:12px">
+      <label class="sm mu">Sender username or phone number (optional)</label>
+      <input id="afrom" class="in" placeholder="e.g. @unknown_user01" value="${esc(d.from)}">
+    </div>` : ''}
+
+    <div style="margin-top:18px">
+      <button class="btn p" data-act="analyze">Check this item</button>
+    </div>
+  </div>
+
+  ${p ? `
+  <div class="card soft">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h3 style="margin:0">What we noticed</h3>
+      <span class="sm mu">Analysis</span>
+    </div>
+    ${p.sig.length ? `
+      <p class="bold" style="color:var(--tx)">Potential warning signs found in the text:</p>
+      ${p.sig.map(s => `
+        <div class="chg">
+          <b>${SIG[s.k]}</b><br>
+          <span class="sm mu">${REASON[s.k]}</span>
+          ${s.m ? `<br><span class="sm" style="color:var(--r);font-style:italic">Found: “${esc(s.m)}”</span>` : ''}
+        </div>
+      `).join('')}
+    ` : `
+      <p class="sm mu">We didn't spot obvious harassment keywords in these specific words. You can still save it as proof.</p>
+    `}
+    <div style="margin-top:16px;padding-top:14px;border-top:1.5px solid var(--ln);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <p class="sm mu" style="margin:0">Ready to store this in your case?</p>
+      <button class="btn p" data-act="add">Save to this case</button>
+    </div>
+  </div>` : ''}
+  `;
+};
+
+// 4. Case Workspace with 5 Clean Tabs:
+// [Saved Proof] [What Changed?] [Timeline] [Connected Info] [What To Do / Report]
+const caseTabs = [
+  ['proof', '🛡️ Saved Proof'],
+  ['new', '⚡ What Changed?'],
+  ['story', '📖 Timeline'],
+  ['link', '🔗 Connected Info'],
+  ['todo', '✅ What To Do']
+];
+
+const CT = {};
+
+// Tab 1: Saved Proof (Screenshots, Audio, Messages)
+function proofItem(c, e, i) {
+  const t = TI(e.type), bl = S.priv.blur ? 'blur-content' : '';
+  const body = e.dataUrl && (e.type === 'screenshot' || (e.ftype && e.ftype.startsWith('image')))
+    ? `<img src="${e.dataUrl}" alt="Saved screenshot" class="${bl}" data-rev style="max-width:100%;max-height:260px;border-radius:12px;display:block;margin:10px 0">`
+    : e.dataUrl && (e.type === 'audio' || (e.ftype && e.ftype.startsWith('audio')))
+    ? `<audio controls src="${e.dataUrl}" style="margin:10px 0;width:100%"></audio>`
+    : e.fname
+    ? `<p style="margin:8px 0">📎 <b>${esc(e.fname)}</b></p>`
+    : '';
+
+  return `
+  <div class="card" style="margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div>
+        <b>${t[1]} ${t[2]}</b>
+        <span class="mu sm">· ${e.ts}${e.from !== 'Unknown sender' ? ' · from ' + esc(e.from) : ''}</span>
+      </div>
+      <button class="btn danger sm" data-del="${c.id}:${i}">Delete</button>
+    </div>
+
+    ${body}
+
+    ${e.text ? `
+      <div>
+        <p class="${bl}" data-rev style="margin:6px 0;font-style:italic">“${esc(e.text)}”</p>
+      </div>
+    ` : ''}
+
+    ${S.priv.blur && (e.text || e.dataUrl) ? `
+      <p class="sm mu" style="margin:4px 0">🔒 Tap content above to show or blur.</p>
+    ` : ''}
+
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--ln-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+      <div class="stamp">Safety Stamp: ${e.hash.slice(0, 24)}…</div>
+      <button class="btn sm" onclick="navigator.clipboard.writeText('${e.hash}');showToast('Safety stamp copied!')">Copy Full Stamp</button>
+    </div>
+  </div>`;
+}
+
+CT.proof = c => `
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <h3 style="margin:0">Proof Saved in this Case</h3>
+    <button class="btn p sm" data-addto="${c.id}">+ Add New Proof</button>
+  </div>
+  <p class="mu sm" style="margin-bottom:16px">
+    Every screenshot, audio note, and message is sealed with a date and a unique safety stamp so no one can accuse you of tampering with it.
+  </p>
+
+  ${c.events.map((e, i) => proofItem(c, e, i)).join('') || '<p class="mu sm">No proof saved yet. Use the button above to add screenshots or messages.</p>'}
+</div>`;
+
+// Tab 2: What Changed?
+CT.new = c => {
+  const h = c.changes;
+  if (!h) {
+    return `
+    <div class="card" style="text-align:center;padding:36px">
+      <h3>No changes recorded yet</h3>
+      <p class="mu sm">When you add a new piece of proof to this case, AEGIS compares it with earlier events and shows you what changed.</p>
+      <button class="btn p" data-addto="${c.id}" style="margin-top:10px">+ Add proof to this case</button>
+    </div>`;
+  }
+
+  const isEscalated = h.after > h.before;
+
+  return `
+  <div class="card" style="border-color:${isEscalated ? 'var(--r)' : 'var(--ln)'}">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3 style="margin:0">What Changed?</h3>
+      <span class="sm mu">Evolution</span>
+    </div>
+
+    <!-- Before -> After pill -->
+    <div class="ba" style="justify-content:space-around;background:var(--bg);padding:14px;border-radius:var(--radius-md)">
+      <div class="ba-box">
+        <div class="sm mu bold">EARLIER LEVEL</div>
+        <div style="margin-top:4px">${pill(h.before)}</div>
+      </div>
+      <div class="ba-arrow">➔</div>
+      <div class="ba-box" style="${isEscalated ? 'background:var(--rs);border-color:var(--r)' : ''}">
+        <div class="sm ${isEscalated ? 'bold' : 'mu'}">CURRENT LEVEL</div>
+        <div style="margin-top:4px">${pill(h.after)}</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:18px">Newly Appearing Warnings</h3>
+    <div style="margin-bottom:14px">
+      ${h.items.map(i => `<div class="chg">${dot(i[0])} <span class="bold">${esc(i[1])}</span></div>`).join('') || '<p class="mu sm">No new warnings.</p>'}
+    </div>
+
+    <h3>Why Did It Change?</h3>
+    <div class="card soft sm" style="padding:14px;line-height:1.6">
+      ${esc(h.why)}
+    </div>
+
+    <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <span class="sm mu">Latest item: "${esc(h.e.text || h.e.fname)}"</span>
+      <button class="btn q sm" data-addto="${c.id}">Add more proof</button>
+    </div>
+  </div>`;
+};
+
+// Tab 3: Timeline (Story)
+CT.story = c => `
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h3 style="margin:0">Timeline of What Happened</h3>
+    <span class="sm mu">${c.events.length} saved events</span>
+  </div>
+
+  <div class="tl">
+    ${c.events.map((e, i) => {
+      const l = lvl(new Set(c.events.slice(0, i + 1).flatMap(x => x.sig.map(s => s.k))));
+      return `
+      <div class="it L${l}">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <b>Day ${e.day}</b>
+          <span class="pill L1" style="font-size:0.75rem">${TI(e.type)[1]} ${TI(e.type)[2]}</span>
+        </div>
+        <div class="sm bold" style="margin-top:3px">${e.sig.length ? e.sig.map(s => SIG[s.k]).join(', ') : 'Proof saved'}</div>
+        <div class="mu sm" style="margin-top:4px">
+          ${e.from !== 'Unknown sender' ? 'From ' + esc(e.from) + ': ' : ''}
+          ${e.text ? '“' + esc(e.text) + '”' : esc(e.fname || '')}
+        </div>
+      </div>`;
+    }).join('') || '<p class="mu sm">No timeline items recorded yet.</p>'}
+
+    ${links(c) ? `
+      <div class="it L2">
+        <b>Possible Connection:</b> Accounts ${esc(links(c).a)} and ${esc(links(c).b)} may be related.
+      </div>
+    ` : ''}
+  </div>
+</div>`;
+
+// Tab 4: Connected Info (Accounts + Exposure Map)
+CT.link = c => {
+  const k = links(c);
+  const t = c.events.map(e => e.text).join(' ');
+  const hasC = /study|college/i.test(t);
+  const hasL = /live/i.test(t);
+
+  const N = {
+    you: [300, 30, 'You (Private)'],
+    ig: [120, 120, 'Instagram'],
+    ph: [300, 120, 'Phone Number'],
+    em: [480, 120, 'Email'],
+    un: [120, 210, 'Username'],
+    pp: [480, 210, 'Public Profile']
+  };
+  if (hasC) N.co = [120, 300, 'Your College'];
+  if (hasL) N.lo = [120, 390, 'Where You Live'];
+
+  const E = [
+    ['you', 'ig'], ['you', 'ph'], ['you', 'em'],
+    ['ig', 'un'], ['em', 'pp'],
+    ['un', 'co'], ['co', 'lo']
+  ].filter(e => N[e[0]] && N[e[1]]);
+
+  const INF = {
+    co: 'Messages asked about your college. Harassers often probe offline institutions before escalating intimidation.',
+    lo: 'A message claims knowledge of where you live. This is often a scare tactic, but keeping location private is wise.',
+    un: 'Reusing the same username across multiple social apps makes it easy for strangers to track you.',
+    ig: 'Check your Instagram settings to block unknown direct message requests and review tagged photos.',
+    ph: 'Keep your phone number private and hidden from public profile lookups.',
+    em: 'Use separate recovery emails for social apps to avoid account connections.',
+    pp: 'Public profiles can show mutual friends, check-ins, and daily routines.',
+    you: 'You are at the center. Keeping personal anchors decoupled protects your privacy.'
+  };
+
+  const g = `
+  <svg viewBox="0 0 600 440" width="100%" role="img" aria-label="Digital connections map">
+    ${E.map(([a, b]) => `<line x1="${N[a][0]}" y1="${N[a][1] + 16}" x2="${N[b][0]}" y2="${N[b][1]}" />`).join('')}
+    ${Object.entries(N).map(([id, n]) => `
+      <g class="node ${['co', 'lo'].includes(id) ? 'inf' : ''} ${S.sel === id ? 'sel' : ''}" data-n="${id}" tabindex="0" role="button">
+        <rect x="${n[0] - 62}" y="${n[1] - 4}" width="124" height="38" rx="19" />
+        <text x="${n[0]}" y="${n[1] + 20}" text-anchor="middle">${n[2]}</text>
+      </g>
+    `).join('')}
+  </svg>`;
+
+  return `
+  <!-- Related Accounts -->
+  <div class="card">
+    <h3>🔗 Accounts That May Be Connected</h3>
+    ${k ? `
+      <div class="card soft" style="margin-top:10px">
+        <b>Possible connection noticed:</b>
+        <div style="margin:8px 0">
+          <span class="stamp bold">${esc(k.a)}</span> ↔ <span class="stamp bold">${esc(k.b)}</span>
+        </div>
+        ${k.sg.map(s => `
+          <div class="chg sm">
+            <b>${s[0]}</b>: ${s[1]}
+          </div>
+        `).join('')}
+        <p class="sm mu" style="margin-top:8px">
+          Notice: Similar handles or timing suggest a connection, but cannot definitively prove identity.
+        </p>
+      </div>
+    ` : '<p class="mu sm">No other accounts have appeared in this case yet. If another account contacts you, add it to compare patterns.</p>'}
+  </div>
+
+  <!-- Exposure Map -->
+  <div class="card">
+    <h3>🌐 What Others Could Piece Together</h3>
+    <p class="mu sm" style="margin-bottom:14px">
+      This map shows how public details might connect, based strictly on what was mentioned in this case.
+      <span style="color:var(--a);font-weight:700">Dotted orange bubbles</span> = mentioned in messages.
+      <strong>Tap any bubble to read safety tips.</strong>
+    </p>
+
+    <div style="background:var(--bg);padding:16px;border-radius:var(--radius-md);margin-bottom:14px">
+      ${g}
+    </div>
+
+    <div class="card soft sm" style="padding:14px">
+      <b>Safety tip:</b> ${S.sel ? esc(INF[S.sel]) : 'Tap any bubble above to see how to protect that detail.'}
+    </div>
+  </div>`;
+};
+
+// Tab 5: What To Do & Report Pack
+CT.todo = c => `
+<div class="card">
+  <h3>What you can do right now</h3>
+  <ol>
+    <li><b>Keep the originals:</b> Please do not delete original chats or files. They are your proof.</li>
+    <li><b>You don't have to reply:</b> Replying often encourages harassers to demand more. Silence deprives them of leverage.</li>
+    <li><b>Tighten privacy:</b> Switch profile to private and remove college tags from your bio.</li>
+    <li><b>Save each new thing here:</b> If they message again or from a new account, add it right away.</li>
+    <li><b>When you are ready, prepare a report:</b> You can create a ready-to-copy report pack below.</li>
+  </ol>
+
+  ${stateOf(c.events).lvl >= 3 ? `
+    <div class="card" style="background:var(--rs);border-color:var(--r);margin:16px 0;padding:16px">
+      <b style="color:var(--r)">Urgent Safety Notice:</b>
+      <p style="color:var(--r);font-size:0.9rem;margin-top:4px">
+        This situation involves coercion or threats. If you feel physically unsafe, call <b>112</b> or the Cyber Crime Helpline at <b>1930</b>.
+      </p>
+    </div>
+  ` : ''}
+
+  <div style="margin-top:20px;border-top:1.5px solid var(--ln);padding-top:16px">
+    <h3>Official Complaint Pack for this Case</h3>
+    <p class="mu sm" style="margin-bottom:12px">Download an organized, factual document of your proof ready to upload to cybercrime.gov.in or give to authorities.</p>
+    <button class="btn p" data-v="report" data-rep="${c.id}">Open Complaint Pack for this case</button>
+  </div>
+</div>`;
+
+// Full Case View
+V.case = () => {
+  const c = gc(S.cur);
+  if (!c) return V.cases();
+  return `
+  <div style="margin-bottom:12px">
+    <a href="#" data-v="cases" class="mu sm bold" style="text-decoration:none">← Back to My Cases</a>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+    <h2 style="margin:0">${esc(c.name)}</h2>
+    ${pill(stateOf(c.events).lvl)}
+  </div>
+
+  <div class="tabs">
+    ${caseTabs.map(t => `<button class="${c.tab === t[0] ? 'on' : ''}" data-t="${t[0]}">${t[1]}</button>`).join('')}
+  </div>
+
+  ${CT[c.tab](c)}
+  `;
+};
+
+// 5. Report Pack
+function pack(c) {
+  const s = S.sec, st = stateOf(c.events), k = links(c), mx = Math.max(0, ...c.events.map(e => e.day));
+  let o = 'AEGIS DIGITAL SAFETY COMPLAINT DOSSIER\n';
+  o += '===================================================\n';
+  o += 'Prepared for complainant review & submission to: National Cyber Crime Portal (1930 / cybercrime.gov.in)\n\n';
+
+  if (s.sum) {
+    o += '1. INCIDENT SUMMARY\n';
+    o += `Case Name: ${c.name}\n`;
+    o += `Timeline span: ${mx} day(s) | Preserved proof items: ${c.events.length}\n`;
+    o += `Involved accounts: ${[...st.acc].join(', ') || 'Unspecified'}\n`;
+    o += `Warning signs identified: ${[...st.sigs].map(x => SIG[x]).join('; ') || 'None'}\n\n`;
+  }
+
+  if (s.stmt) {
+    o += '2. COMPLAINANT STATEMENT\n';
+    o += `"${S.stmt || 'I am submitting this structured evidence log regarding persistent unwanted contact, intimidation, and coercive extortion targeted against me.'}"\n\n`;
+  }
+
+  if (s.tl) {
+    o += '3. CHRONOLOGICAL TIMELINE\n';
+    o += c.events.map(e => `- [Day ${e.day}] (${TI(e.type)[2]} from ${e.from}): ${e.text ? '"' + e.text + '"' : e.fname || ''}`).join('\n') + '\n\n';
+  }
+
+  if (s.ind) {
+    o += '4. RELEVANT STATUTORY OFFENSES (INDIA)\n';
+    o += '- Bharatiya Nyaya Sanhita 2023, Section 78: Cyberstalking\n';
+    o += '- Bharatiya Nyaya Sanhita 2023, Section 351: Criminal Intimidation\n';
+    o += '- Information Technology Act 2000, Section 66E: Privacy Violation\n';
+    o += '- Information Technology Act 2000, Section 67/67A: Transmitting Obscene Content\n\n';
+  }
+
+  if (s.ev) {
+    o += '5. CRYPTOGRAPHIC PROOF INTEGRITY INDEX\n';
+    o += c.events.map((e, i) => `- Item #${i + 1} (${e.ts}, ${TI(e.type)[2]}): Safety Stamp [${e.hash}]`).join('\n') + '\n\n';
+  }
+
+  if (s.conn && k) {
+    o += '6. CORRELATED ACCOUNTS\n';
+    o += `Accounts ${k.a} and ${k.b} exhibit correlation signals (${k.sg.map(x => x[0]).join('; ')}).\n\n`;
+  }
+
+  o += '===================================================\n';
+  o += 'DISCLAIMER: AEGIS prepares this document for your independent filing. AEGIS never forwards data automatically.\n';
+  return o;
+}
+
+V.report = () => {
+  if (!S.cases.length) return '<h2>Prepare a report</h2><p class="mu">Start a case first, then you can prepare a report pack from it.</p>';
+  const c = gc(S.rep) || S.cases[0];
+  S.rep = c.id;
+
+  return `
+  <h2>Prepare Complaint Pack</h2>
+  <p class="mu sm" style="margin-bottom:16px">
+    Choose what to include in your complaint pack. You can edit the text directly before copying or downloading it for the Cyber Crime portal (1930 / cybercrime.gov.in).
+  </p>
+
+  <div class="card">
+    <label class="sm mu">Which case do you want to report?</label>
+    <select id="arep">
+      ${S.cases.map(x => `<option value="${x.id}" ${x.id === c.id ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}
+    </select>
+
+    <div style="margin-top:14px;border-top:1.5px solid var(--ln-soft);padding-top:10px">
+      <label class="sm mu">Select sections to include:</label>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:6px">
+        ${[
+          ['sum', 'Incident Summary'],
+          ['stmt', 'Personal Statement'],
+          ['tl', 'Chronological Timeline'],
+          ['ind', 'Statutory Indian Sections (BNS / IT Act)'],
+          ['ev', 'Evidence Safety Stamps'],
+          ['conn', 'Cross-Account Linkage']
+        ].map(([k, l]) => `<label class="t"><input type="checkbox" data-sec="${k}" ${S.sec[k] ? 'checked' : ''}> <span>${l}</span></label>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <label class="sm mu bold" style="margin:0">Formatted Complaint Pack Text</label>
+      <button class="btn sm" onclick="navigator.clipboard.writeText($('#pk').value);showToast('Report copied to clipboard!')">Copy text</button>
+    </div>
+    <textarea id="pk" aria-label="Report text" style="min-height:280px;font-family:monospace;font-size:0.85rem">${esc(pack(c))}</textarea>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <span class="sm mu">Upload this on <b>cybercrime.gov.in</b> or dial <b>1930</b>.</span>
+      <button class="btn p" data-act="dl">Download Report (.txt)</button>
+    </div>
+  </div>`;
+};
+
+// 6. Help Desk
+V.help = () => `
+<h2>Immediate Help & Helplines</h2>
+<p class="mu sm" style="margin-bottom:16px">AEGIS is a personal companion desk, not police or ambulance. If you are in immediate danger, please dial official emergency numbers directly:</p>
+
+<div class="card soft">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div>
+      <span class="sm mu bold">NATIONAL EMERGENCY (INDIA)</span>
+      <h3 style="margin:0">112 — Police, Medical & Fire</h3>
+      <p class="sm mu">24/7 National Emergency Toll-Free Hotline</p>
+    </div>
+    <a href="tel:112" class="btn p" style="font-size:1.1rem;padding:10px 24px">📞 Call 112</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <span class="sm mu bold">CRISIS COUNSELING & HARASSMENT</span>
+    <h3>181 — Women Helpline</h3>
+    <p class="sm mu">24/7 confidential support for stalking, harassment, and crisis assistance.</p>
+    <a href="tel:181" class="btn q sm" style="margin-top:8px">📞 Call 181</a>
+  </div>
+
+  <div class="card">
+    <span class="sm mu bold">CYBER HARASSMENT & BLACKMAIL</span>
+    <h3>1930 — Cyber Crime Helpline</h3>
+    <p class="sm mu">National helpline for cyberstalking, NCII, and online blackmail (cybercrime.gov.in).</p>
+    <a href="tel:1930" class="btn q sm" style="margin-top:8px">📞 Call 1930</a>
+  </div>
+</div>
+
+${S.profile.helper ? `
+<div class="card">
+  <h3>Someone You Trust</h3>
+  <p class="sm mu">${esc(S.profile.helper)} is listed as your personal trusted contact.</p>
+  ${S.profile.phone ? `<a href="tel:${esc(S.profile.phone)}" class="btn p sm" style="margin-top:6px">📞 Call ${esc(S.profile.phone)}</a>` : ''}
+</div>` : ''}
+
+<div class="card">
+  <h3>Helpful Online Resources</h3>
+  <ul>
+    <li><a href="https://cybercrime.gov.in" target="_blank" style="color:var(--ac);font-weight:700">cybercrime.gov.in</a>: Official portal to file online harassment complaints.</li>
+    <li><a href="https://stopncii.org" target="_blank" style="color:var(--ac);font-weight:700">StopNCII.org</a>: Create on-device hashes of intimate images so social platforms block copies.</li>
+  </ul>
+</div>
+`;
+
+// 7. Privacy
+V.privacy = () => `
+<h2>Your Privacy & Sovereignty</h2>
+<p class="mu sm" style="margin-bottom:16px">You have complete authority over your data. We never sell, track, or share your information.</p>
+
+<div class="card">
+  <h3>Our Privacy Promises</h3>
+  <ul>
+    <li><b>Zero Tracking:</b> No Google Analytics, marketing cookies, or tracking pixels.</li>
+    <li><b>Stored Locally:</b> Your proof and notes stay on this device.</li>
+    <li><b>No Auto-Reporting:</b> AEGIS never alerts third parties without your explicit instruction.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Safety Settings</h3>
+  <label class="t">
+    <input type="checkbox" data-pv="blur" ${S.priv.blur ? 'checked' : ''}>
+    <span>Hide sensitive messages and screenshots behind a tap-to-reveal blur</span>
+  </label>
+</div>
+
+<div class="card" style="border-color:var(--rs)">
+  <h3 style="color:var(--r)">Erase All Data</h3>
+  <p class="sm mu">Permanently delete all cases, screenshots, audio notes, and settings immediately.</p>
+  <button class="btn danger" data-act="delall" style="margin-top:8px">🗑️ Delete All Data Permanently</button>
+</div>
+`;
+
+// 8. Profile Settings
+V.profile = () => {
+  const p = S.profile;
+  return `
+  <h2>My Safety Profile</h2>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+      <div class="av" style="width:60px;height:60px;font-size:1.5rem">${(p.name.trim()[0] || 'A').toUpperCase()}</div>
+      <div style="flex:1">
+        <label class="sm mu">What should we call you? (a nickname is fine)</label>
+        <input class="in" data-pf="name" value="${esc(p.name)}" placeholder="Your preferred name">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Someone I Trust (Optional)</h3>
+    <p class="sm mu">We never contact them for you. They will be shown on your Help page so you can reach them with one tap.</p>
+    <div style="margin-top:8px">
+      <label class="sm mu">Their Name</label>
+      <input class="in" data-pf="helper" value="${esc(p.helper)}" placeholder="e.g. Sister, Best Friend, Counselor">
+    </div>
+    <div style="margin-top:8px">
+      <label class="sm mu">Their Phone Number</label>
+      <input class="in" data-pf="phone" value="${esc(p.phone)}" placeholder="+91 ..." inputmode="tel">
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Appearance & Disguise</h3>
+    <div style="margin-bottom:14px">
+      <label class="sm mu">Theme</label>
+      <select data-pc="theme">
+        ${[['light', 'Soft Light (Blush Ivory)'], ['dark', 'Warm Dark (Night Mode)']].map(o => `<option value="${o[0]}" ${p.theme === o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}
+      </select>
+    </div>
+    <label class="t">
+      <input type="checkbox" data-pc="disguise" ${p.disguise ? 'checked' : ''}>
+      <span>Show app header and title as "Notes" so it looks ordinary if someone glances at your screen</span>
+    </label>
+  </div>`;
+};
+
+// Theme Management
+function applyTheme() {
+  const t = S.profile.theme;
+  document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light';
+  const b = $('#theme');
+  if (b) b.textContent = t === 'dark' ? '☀' : '🌙';
+}
+
+function render() {
+  nav();
+  $('#main').innerHTML = V[S.view]();
+}
+
+function sync() {
+  const g = id => document.getElementById(id);
+  if (g('atext')) S.draft.text = g('atext').value;
+  if (g('afrom')) S.draft.from = g('afrom').value;
+  if (g('aname')) S.draft.name = g('aname').value;
+}
+
+// Global Event Listeners
+document.addEventListener('click', ev => {
+  const t = ev.target.closest('[data-v],[data-t],[data-act],[data-n],[data-del],[data-rev],[data-open],[data-ty],[data-addto],[data-newcase],#qe,#cover');
+  if (!t) return;
+
+  if (t.id === 'qe') {
+    $('#cover').style.display = 'block';
+    return;
+  }
+  if (t.id === 'cover') {
+    t.style.display = 'none';
+    return;
+  }
+  if (t.dataset.rev !== undefined) {
+    t.classList.toggle('show');
+    return;
+  }
+
+  ev.preventDefault();
+  sync();
+  const D = t.dataset;
+
+  if (D.v) {
+    S.view = D.v;
+    if (D.rep) S.rep = +D.rep;
+    window.scrollTo(0, 0);
+  } else if (D.t) {
+    gc(S.cur).tab = D.t;
+  } else if (D.n) {
+    S.sel = D.n;
+  } else if (D.open) {
+    S.cur = +D.open;
+    S.view = 'case';
+    window.scrollTo(0, 0);
+  } else if (D.ty) {
+    S.draft.type = D.ty;
+    S.draft.file = null;
+    S.draft.dataUrl = null;
+    S.pending = null;
+  } else if (D.addto) {
+    S.draft.target = D.addto;
+    S.pending = null;
+    S.view = 'add';
+    window.scrollTo(0, 0);
+  } else if (D.newcase !== undefined) {
+    S.draft.target = 'new';
+    S.pending = null;
+    S.view = 'add';
+    window.scrollTo(0, 0);
+  } else if (D.del) {
+    const [a, b] = D.del.split(':');
+    gc(+a).events.splice(+b, 1);
+    showToast("Proof removed from case");
+  } else {
+    const a = D.act, d = S.draft;
+    if (a === 'analyze') {
+      if (!d.text.trim() && !d.file) return;
+      S.pending = { type: d.type, from: d.from.trim(), text: d.text.trim(), file: d.file, dataUrl: d.dataUrl, sig: detect(d.text) };
+    }
+    if (a === 'add') addEventToCase();
+    if (a === 'delall') {
+      S.cases = [];
+      S.pending = null;
+      showToast("All data permanently erased");
+    }
+    if (a === 'dl') {
+      const b = new Blob([$('#pk').value], { type: 'text/plain' });
+      const u = URL.createObjectURL(b);
+      const l = document.createElement('a');
+      l.href = u;
+      l.download = 'AEGIS-Complaint-Pack.txt';
+      l.click();
+      URL.revokeObjectURL(u);
+      showToast("Complaint pack downloaded");
+      return;
+    }
+  }
+  render();
+});
+
+// Keyboard Esc handler
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const c = $('#cover');
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
+  }
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.n) {
+    S.sel = e.target.dataset.n;
+    e.preventDefault();
+    render();
+  }
+});
+
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.pc) {
+    S.profile[t.dataset.pc] = t.type === 'checkbox' ? t.checked : t.value;
+    applyTheme();
+    render();
+    return;
+  }
+  if (t.dataset.sec) {
+    S.sec[t.dataset.sec] = t.checked ? 1 : 0;
+    render();
+  } else if (t.dataset.pv) {
+    S.priv[t.dataset.pv] = t.type === 'checkbox' ? t.checked : t.value;
+    render();
+  } else if (t.id === 'atarget') {
+    sync();
+    S.draft.target = t.value;
+    render();
+  } else if (t.id === 'arep') {
+    S.rep = +t.value;
+    render();
+  } else if (t.id === 'afile') {
+    sync();
+    const file = t.files[0] || null;
+    S.draft.file = file;
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        S.draft.dataUrl = ev.target.result;
+        render();
+      };
+      reader.readAsDataURL(file);
+    } else if (file) {
+      S.draft.dataUrl = URL.createObjectURL(file);
+      render();
+    }
+  }
+});
+
+document.addEventListener('input', e => {
+  if (e.target.dataset.pf) {
+    S.profile[e.target.dataset.pf] = e.target.value;
+    nav();
+  }
+  if (['atext', 'afrom', 'aname'].includes(e.target.id)) sync();
+  if (e.target.id === 'pk') S.stmt = e.target.value;
+});
+
+// Initialize
+initDefaultCases();
+applyTheme();
+$('#theme').onclick = () => {
+  S.profile.theme = S.profile.theme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+  if (S.view === 'profile') render();
+};
+render();
+</script>
+</body>
+</html>
