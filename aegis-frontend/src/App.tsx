@@ -23,8 +23,6 @@ import {
   fetchActiveIncident, 
   fetchChanges, 
   createIncident,
-  loadDemoCase, 
-  injectDay7, 
   IncidentData, 
   ChangeComparison 
 } from './lib/api';
@@ -40,7 +38,7 @@ const MainLayout: React.FC = () => {
     return (localStorage.getItem('aegis_theme') as 'light' | 'dark') || 'light';
   });
   const [userName, setUserName] = useState<string>(() => {
-    return localStorage.getItem('aegis_user_name') || 'Ananya';
+    return localStorage.getItem('aegis_user_name') || '';
   });
 
   const applyTheme = (t: 'light' | 'dark') => {
@@ -58,10 +56,7 @@ const MainLayout: React.FC = () => {
     try {
       setLoading(true);
       let all = await fetchAllIncidents();
-      if (!all || all.length === 0) {
-        await loadDemoCase(true);
-        all = await fetchAllIncidents();
-      }
+      if (!all) all = [];
       setCasesList(all);
 
       const target = targetId || activeCaseId || (all.length > 0 ? all[0].id : null);
@@ -75,6 +70,10 @@ const MainLayout: React.FC = () => {
         } catch {
           setChanges(null);
         }
+      } else {
+        setActiveCaseId('');
+        setIncident(null);
+        setChanges(null);
       }
     } catch (err) {
       console.error(err);
@@ -84,7 +83,9 @@ const MainLayout: React.FC = () => {
         setActiveCaseId(active.id);
         setCasesList([active]);
       } catch (e) {
-        console.error(e);
+        setIncident(null);
+        setActiveCaseId('');
+        setCasesList([]);
       }
     } finally {
       setLoading(false);
@@ -136,25 +137,7 @@ const MainLayout: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleResetDemo = async () => {
-    try {
-      await loadDemoCase(false);
-      await loadAllCases();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleInjectDay7 = async () => {
-    try {
-      await injectDay7();
-      await loadAllCases();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const currentIncidentId = incident?.id || activeCaseId || 'inc-demo-ananya-2026';
+  const currentIncidentId = incident?.id || activeCaseId || '';
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)] font-sans antialiased transition-colors duration-200">
@@ -222,7 +205,7 @@ const MainLayout: React.FC = () => {
           <Route path="/linkage" element={<ThreatLinkageView incidentId={currentIncidentId} />} />
           <Route path="/reconstruction" element={<CaseReconstructionView incidentId={currentIncidentId} />} />
           <Route path="/vault" element={<EvidenceVaultView incident={incident} />} />
-          <Route path="/rapid-response" element={<RapidResponseView />} />
+          <Route path="/rapid-response" element={<RapidResponseView incident={incident} />} />
           <Route path="/complaint" element={<ComplaintView incidentId={currentIncidentId} />} />
           <Route path="/privacy" element={<PrivacyCenterView onDataWiped={() => { setIncident(null); setChanges(null); setCasesList([]); }} />} />
           <Route path="/help" element={<ImmediateHelpView />} />
@@ -234,8 +217,6 @@ const MainLayout: React.FC = () => {
                 currentTheme={theme} 
                 userName={userName}
                 onUpdateUserName={(name) => setUserName(name)}
-                onLoadSampleData={handleResetDemo}
-                onSimulateUpdate={handleInjectDay7}
               />
             } 
           />

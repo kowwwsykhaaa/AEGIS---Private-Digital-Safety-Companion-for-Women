@@ -17,10 +17,7 @@ def list_incidents(db: Session = Depends(get_db)):
 def get_active_incident(db: Session = Depends(get_db)):
     incident = db.query(Incident).filter(Incident.status == "active").order_by(Incident.updated_at.desc()).first()
     if not incident:
-        # If no active incident exists, return first incident or 404
-        incident = db.query(Incident).first()
-    if not incident:
-        raise HTTPException(status_code=404, detail="No incident found. Click 'Load Demo Case' to begin.")
+        raise HTTPException(status_code=404, detail="No active case found.")
     return incident
 
 @router.get("/{incident_id}", response_model=IncidentDetailResponse)

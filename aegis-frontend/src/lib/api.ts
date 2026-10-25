@@ -300,18 +300,6 @@ export async function analyzeInput(payload: {
   return res.json();
 }
 
-export async function loadDemoCase(full: boolean = true) {
-  const res = await fetch(`${API_BASE}/demo/load?full=${full}`, { method: 'POST' });
-  if (!res.ok) throw new Error('Failed to seed demo case.');
-  return res.json();
-}
-
-export async function injectDay7() {
-  const res = await fetch(`${API_BASE}/demo/inject-day7`, { method: 'POST' });
-  if (!res.ok) throw new Error('Failed to inject Day 7 evidence.');
-  return res.json();
-}
-
 export async function wipeAllData() {
   const res = await fetch(`${API_BASE}/privacy/wipe`, { method: 'POST' });
   if (!res.ok) throw new Error('Failed to wipe data.');

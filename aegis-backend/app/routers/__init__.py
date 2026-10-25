@@ -9,7 +9,6 @@ from app.routers.evidence import router as evidence_router
 from app.routers.complaint import router as complaint_router
 from app.routers.privacy import router as privacy_router
 from app.routers.help import router as help_router
-from app.routers.demo import router as demo_router
 
 __all__ = [
     "analyze_router",
@@ -23,5 +22,5 @@ __all__ = [
     "complaint_router",
     "privacy_router",
     "help_router",
-    "demo_router",
 ]
+

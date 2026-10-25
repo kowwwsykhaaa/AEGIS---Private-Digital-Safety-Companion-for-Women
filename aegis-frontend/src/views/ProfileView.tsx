@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { User, HeartHandshake, Eye, Moon, Sun, Sparkles, Check, RefreshCw } from 'lucide-react';
+import { User, HeartHandshake, Eye, Moon, Sun, Check } from 'lucide-react';
 
 interface ProfileViewProps {
   onThemeToggle: (theme: 'light' | 'dark') => void;
   currentTheme: 'light' | 'dark';
-  onLoadSampleData?: () => void;
-  onSimulateUpdate?: () => void;
   userName?: string;
   onUpdateUserName?: (name: string) => void;
 }
@@ -13,9 +11,7 @@ interface ProfileViewProps {
 export const ProfileView: React.FC<ProfileViewProps> = ({ 
   onThemeToggle, 
   currentTheme,
-  onLoadSampleData,
-  onSimulateUpdate,
-  userName = 'Ananya',
+  userName = '',
   onUpdateUserName
 }) => {
   const [name, setName] = useState(userName);
@@ -23,7 +19,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   const [helperPhone, setHelperPhone] = useState(() => localStorage.getItem('aegis_helper_phone') || '');
   const [disguise, setDisguise] = useState(() => localStorage.getItem('aegis_disguise') === 'true');
   const [saved, setSaved] = useState(false);
-  const [sampleLoadedMsg, setSampleLoadedMsg] = useState<string | null>(null);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,22 +29,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
     if (onUpdateUserName) onUpdateUserName(name);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
-  };
-
-  const handleLoadSample = async () => {
-    if (onLoadSampleData) {
-      await onLoadSampleData();
-      setSampleLoadedMsg("Sample situation loaded successfully.");
-      setTimeout(() => setSampleLoadedMsg(null), 3000);
-    }
-  };
-
-  const handleSimulate = async () => {
-    if (onSimulateUpdate) {
-      await onSimulateUpdate();
-      setSampleLoadedMsg("Sample follow-up update added to active case.");
-      setTimeout(() => setSampleLoadedMsg(null), 3000);
-    }
   };
 
   return (
@@ -66,7 +45,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         <div className="card-warm p-6 space-y-4">
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-[var(--accent-rose)] text-white flex items-center justify-center text-2xl font-bold shadow-sm">
-              {(name.trim()[0] || 'A').toUpperCase()}
+              {(name.trim()[0] || 'U').toUpperCase()}
             </div>
             <div className="flex-1">
               <label className="block text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider mb-1">
@@ -186,48 +165,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           </button>
         </div>
       </form>
-
-      {/* Practice / Sample Data Section (Discreet, zero emojis) */}
-      {(onLoadSampleData || onSimulateUpdate) && (
-        <div className="card-warm p-6 space-y-3 border-dashed border-[var(--border-color)]">
-          <div className="flex items-center space-x-2 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
-            <Sparkles className="w-4 h-4 text-[var(--accent-rose)]" />
-            <span>Practice & Exploring AEGIS</span>
-          </div>
-          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-            If you want to see how AEGIS tracks an escalating situation before using it with your own data, you can load sample practice items.
-          </p>
-
-          <div className="flex flex-wrap gap-3 pt-2">
-            {onLoadSampleData && (
-              <button
-                type="button"
-                onClick={handleLoadSample}
-                className="flex items-center space-x-2 bg-[var(--bg-card-subtle)] hover:bg-[var(--border-subtle)] text-[var(--text-primary)] border border-[var(--border-color)] px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm"
-              >
-                <RefreshCw className="w-3.5 h-3.5 text-[var(--text-muted)]" />
-                <span>Load Sample Case</span>
-              </button>
-            )}
-
-            {onSimulateUpdate && (
-              <button
-                type="button"
-                onClick={handleSimulate}
-                className="flex items-center space-x-2 bg-[var(--accent-rose-light)] hover:opacity-90 text-[var(--accent-rose)] border border-[var(--accent-rose-border)] px-4 py-2 rounded-full text-xs font-bold transition-all"
-              >
-                <span>Add Sample Update</span>
-              </button>
-            )}
-          </div>
-
-          {sampleLoadedMsg && (
-            <p className="text-xs text-emerald-600 dark:text-emerald-400 font-bold pt-1">
-              {sampleLoadedMsg}
-            </p>
-          )}
-        </div>
-      )}
     </div>
   );
 };
