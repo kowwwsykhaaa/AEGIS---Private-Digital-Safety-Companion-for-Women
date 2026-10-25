@@ -1,11 +1,11 @@
 # AEGIS — Digital Safety Intelligence
 > **"Understand what is happening. Decide what happens next."**
 > 
-> *SafeCase tells her what to do. AEGIS explains what is happening.*
+> *The word comes from the Greek aigís (goatskin), referring to the magical shield or breastplate carried by Zeus or Athena in ancient Greek mythology. [[1](https://en.wikipedia.org/wiki/Aegis), [2](https://www.merriam-webster.com/dictionary/aegis), [3](https://www.britannica.com/topic/aegis)]*
 
 > **Privacy & Boundary Note:** AEGIS operates from a clean, private database. It never contacts the police or submits any complaint automatically; it only prepares a structured draft for the user to review, download, and use herself.
 
-AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. It synthesizes the rapid-response foundation of **SafeCase** (evidence triage, client-side cryptographic hashing, platform reporting, and cybercrime complaint generation) with the threat-intelligence layer of **AEGIS** (longitudinal threat escalation, digital exposure graph, cross-account threat linkage, case reconstruction, and change detection).
+AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. True to its mythological namesake—a protective shield—AEGIS unifies rapid-response evidence triage, client-side cryptographic hashing, longitudinal threat escalation, digital exposure graphs, cross-account threat linkage, case reconstruction, and change detection into a single, cohesive defensive workspace.
 
 ---
 

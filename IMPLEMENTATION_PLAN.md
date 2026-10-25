@@ -1,7 +1,7 @@
 # AEGIS — Product Implementation Plan & Engineering Specifications
 
 ## 1. Project Overview & Scope
-AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. It synthesizes the rapid-response foundation of SafeCase (evidence capture, cryptographic integrity records, triage, platform notices, cybercrime complaint generation) with the digital threat-intelligence layer of AEGIS (threat escalation trajectory, identity exposure mapping, account linkage, case reconstruction, and change detection).
+AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. Named after the mythical shield or breastplate (*aigís*) carried by Zeus and Athena in Greek mythology, AEGIS provides defensive digital safety intelligence: evidence preservation, cryptographic integrity records, rapid triage, platform notices, threat escalation trajectory, identity exposure mapping, cross-account linkage, case reconstruction, and differential change detection.
 
 The system operates **100% dynamically from an empty database**, computing all graphs, threat trajectories, change diffs, and complaint packs live from user evidence with zero hardcoded demo data or simulated personas.
 

@@ -4,11 +4,11 @@
 
 > **"Understand what is happening. Decide what happens next."**
 > 
-> *SafeCase tells her what to do. AEGIS explains what is happening.*
+> *The word comes from the Greek aigís (goatskin), referring to the magical shield or breastplate carried by Zeus or Athena in ancient Greek mythology. [[1](https://en.wikipedia.org/wiki/Aegis), [2](https://www.merriam-webster.com/dictionary/aegis), [3](https://www.britannica.com/topic/aegis)]*
 
-AEGIS is a **personal digital safety intelligence desk** designed for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. It synthesizes two core paradigms into one seamless product:
-1. **The Rapid-Response Foundation (SafeCase):** Urgent triage, client-side cryptographic hashing, evidence preservation, platform report drafting, cybercrime complaint generation, and immediate privacy controls (Quick Exit, local data ownership).
-2. **The Digital Threat-Intelligence Layer (AEGIS):** Multi-event threat escalation trajectory, identity exposure mapping, cross-account threat linkage, longitudinal case reconstruction, and before-and-after change detection ("What Changed?").
+AEGIS is a **personal digital safety intelligence desk** designed for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. Serving as a modern digital shield, it unifies two essential pillars into one seamless product:
+1. **The Rapid-Response Foundation:** Urgent triage, client-side cryptographic hashing, evidence preservation, platform report drafting, cybercrime complaint generation, and immediate privacy controls (Quick Exit, local data ownership).
+2. **The Digital Threat-Intelligence Layer:** Multi-event threat escalation trajectory, identity exposure mapping, cross-account threat linkage, longitudinal case reconstruction, and before-and-after change detection ("What Changed?").
 
 ### What AEGIS Is NOT
 - **Not an SOS/panic app:** Does not rely on fake panic buttons, siren alarms, or physical shake-to-alert gimmicks.
