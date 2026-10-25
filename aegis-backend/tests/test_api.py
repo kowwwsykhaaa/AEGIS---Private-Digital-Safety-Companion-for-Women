@@ -111,3 +111,105 @@ def test_helplines_endpoint():
         assert "181" in numbers
         assert "1930" in numbers
 
+def test_full_lifecycle_from_empty_database():
+    with TestClient(app) as client:
+        # 1. Start from an empty database
+        res_list = client.get("/api/incidents")
+        assert res_list.status_code == 200
+
+        # 2. Create a new incident through normal API
+        inc_payload = {
+            "title": "Online harassment and coercion",
+            "description": "Suspicious anonymous messages demanding photos"
+        }
+        res_create = client.post("/api/incidents", json=inc_payload)
+        assert res_create.status_code == 200
+        incident_id = res_create.json()["id"]
+
+        # 3. Verify all endpoints handle 0-evidence case gracefully
+        exp_empty = client.get(f"/api/exposure/{incident_id}")
+        assert exp_empty.status_code == 200
+
+        rec_empty = client.get(f"/api/reconstruction/{incident_id}")
+        assert rec_empty.status_code == 200
+        assert rec_empty.json()["total_events"] == 0
+
+        link_empty = client.get(f"/api/linkage/{incident_id}")
+        assert link_empty.status_code == 200
+        assert link_empty.json()["accounts_evaluated"] == 0
+        assert link_empty.json()["connections_found"] == []
+
+        comp_empty = client.get(f"/api/complaint/{incident_id}")
+        assert comp_empty.status_code == 200
+
+        chg_empty = client.get(f"/api/changes/{incident_id}")
+        assert chg_empty.status_code == 200
+
+        # 4. Add Day 1 evidence
+        p1 = {
+            "content": "Hey cute girl, why aren't you replying to my DMs?",
+            "content_type": "message",
+            "source_platform": "Instagram Direct",
+            "account_handle": "@stalker_alpha",
+            "incident_id": incident_id,
+            "auto_add_to_case": True
+        }
+        r1 = client.post("/api/analyze", json=p1)
+        assert r1.status_code == 200
+        assert r1.json()["current_stage"] in ["APPROACH", "PERSISTENCE"]
+
+        # Check evidence has 1 item with SHA-256
+        vault_res = client.get(f"/api/evidence/{incident_id}")
+        assert vault_res.status_code == 200
+        vault_items = vault_res.json()
+        assert len(vault_items) == 1
+        assert len(vault_items[0]["file_hash_sha256"]) == 64
+
+        # 5. Add Day 3 escalating evidence from similar handle
+        p2 = {
+            "content": "I know you study at Delhi University. Send your private photos or I will expose you to your class.",
+            "content_type": "message",
+            "source_platform": "Instagram Direct",
+            "account_handle": "@stalker_alpha_2",
+            "incident_id": incident_id,
+            "auto_add_to_case": True
+        }
+        r2 = client.post("/api/analyze", json=p2)
+        assert r2.status_code == 200
+        assert r2.json()["current_stage"] in ["COERCION", "INTIMIDATION", "BLACKMAIL"]
+
+        # 6. Verify What Changed reflects transition
+        chg_res = client.get(f"/api/changes/{incident_id}")
+        assert chg_res.status_code == 200
+        chg_data = chg_res.json()
+        assert chg_data["is_escalated"] is True
+        assert chg_data["before_stage"] != chg_data["after_stage"]
+        assert "@stalker_alpha_2" in chg_data["new_accounts_detected"]
+
+        # 7. Verify Threat Linkage detects potential connection with attribution guardrails
+        link_res = client.get(f"/api/linkage/{incident_id}")
+        assert link_res.status_code == 200
+        link_data = link_res.json()
+        assert link_data["accounts_evaluated"] == 2
+        assert len(link_data["connections_found"]) == 1
+        conn = link_data["connections_found"][0]
+        assert conn["verdict"] == "Potential connection detected"
+        assert "does not establish attribution" in conn["plain_explanation"]
+        assert "does not establish attribution" in link_data["disclaimer"]
+
+        # 8. Verify Complaint Pack includes both handles and legal provisions
+        comp_res = client.get(f"/api/complaint/{incident_id}")
+        assert comp_res.status_code == 200
+        comp_text = comp_res.json()["formatted_dossier_text"]
+        assert "@stalker_alpha" in comp_text
+        assert "@stalker_alpha_2" in comp_text
+
+        # 9. Clean up via DELETE /api/incidents/{id}
+        del_res = client.delete(f"/api/incidents/{incident_id}")
+        assert del_res.status_code == 200
+
+        # Verify incident is deleted
+        get_res = client.get(f"/api/incidents/{incident_id}")
+        assert get_res.status_code == 404
+
+
