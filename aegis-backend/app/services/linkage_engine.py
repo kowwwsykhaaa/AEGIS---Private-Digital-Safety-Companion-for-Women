@@ -66,7 +66,7 @@ class ThreatLinkageEngine:
                     metrics.append(LinkageMetric(
                         name="Sequential Timing",
                         level="High" if timing_gap_hours <= 12 else "Moderate",
-                        score=round(max(0.0, 1.0 - (timing_gap_hours / 48.0)), 2),
+                        score=float(timing_gap_hours),
                         description=f"Account {a2.handle} was active within {timing_gap_hours}h of {a1.handle}."
                     ))
                     shared_signals.append(f"Close timing interval ({timing_gap_hours}h)")

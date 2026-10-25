@@ -141,7 +141,7 @@ Incident Title: {incident.title}
 3. EXECUTIVE INCIDENT SUMMARY:
 {exec_summary}
 
-4. PROVISIONS THAT MAY BE RELEVANT (INDIA) - to be confirmed with a lawyer or legal-aid clinic:
+4. PROVISIONS THAT MAY BE RELEVANT (CONFIRM WITH A LAWYER OR LEGAL-AID CLINIC):
 - Bharatiya Nyaya Sanhita 2023, Sec 78: Stalking
 - Bharatiya Nyaya Sanhita 2023, Sec 351: Criminal Intimidation
 - Information Technology Act 2000, Sec 66E: Privacy Violation

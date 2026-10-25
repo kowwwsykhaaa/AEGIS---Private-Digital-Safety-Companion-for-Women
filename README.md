@@ -3,7 +3,7 @@
 > 
 > *SafeCase tells her what to do. AEGIS explains what is happening.*
 
-> **About this prototype:** every case, name and message shown is fictional. AEGIS never contacts the police or submits any complaint; it only prepares a draft for the user to review and use herself.
+> **Privacy & Boundary Note:** AEGIS operates from a clean, private database. It never contacts the police or submits any complaint automatically; it only prepares a structured draft for the user to review, download, and use herself.
 
 AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. It synthesizes the rapid-response foundation of **SafeCase** (evidence triage, client-side cryptographic hashing, platform reporting, and cybercrime complaint generation) with the threat-intelligence layer of **AEGIS** (longitudinal threat escalation, digital exposure graph, cross-account threat linkage, case reconstruction, and change detection).
 
@@ -33,7 +33,7 @@ DETECT ➔ UNDERSTAND ➔ CONNECT ➔ RECONSTRUCT ➔ DETECT CHANGE ➔ PROTECT 
 4. **Threat Linkage Engine:** Detects explainable correlations between separate accounts (handle morphology, timing synchronization, phrasing overlap) under strict attribution guardrails (*"Potential connection detected"*, never legal certainty).
 5. **Case Reconstruction:** Synthesizes fragmented messages into an objective chronological narrative where every milestone cites verified evidence IDs (`[EV-xxx]`).
 6. **Evidence Vault & Integrity Records:** Client-side and server SHA-256 fingerprinting with tap-to-reveal blur protection for sensitive media.
-7. **Complaint Pack Generator:** Formatted dossier ready for Indian authorities with applicable statutory sections under Bharatiya Nyaya Sanhita (BNS 2023) and Information Technology Act 2000.
+7. **Complaint Pack Generator:** Formatted dossier ready for Indian authorities with provisions that may be relevant (confirm with a lawyer or legal-aid clinic) under Bharatiya Nyaya Sanhita (BNS 2023) and Information Technology Act 2000.
 8. **Privacy Sovereignty & Quick Exit:** Universal `Esc` key shortcut and top-right button immediately replacing AEGIS with an innocent daily notes screen, plus a 1-tap zero-trace data wipe.
 9. **Emergency Hub:** Direct routing to verified Indian hotlines: **112** (Emergency), **181** (Women Helpline), and **1930** (Cyber Crime).
 
@@ -74,8 +74,7 @@ WOMEN_SAFETY/
 │   │   │   ├── case_reconstruction.py
 │   │   │   ├── evidence_service.py
 │   │   │   └── complaint_service.py
-│   │   ├── routers/              # Clean REST route controllers
-│   │   └── demo_data.py          # 7-day reproducible Ananya scenario
+│   │   └── routers/              # Clean REST route controllers
 │   ├── tests/
 │   │   ├── test_engines.py       # Unit tests for all 5 threat engines
 │   │   └── test_api.py           # End-to-end API route tests
@@ -121,7 +120,7 @@ cd aegis-backend
 python -m pip install -r requirements.txt
 python run.py
 ```
-*The API will start at `http://127.0.0.1:8000`. On first run, it automatically creates SQLite tables and seeds the baseline demo incident.*
+*The API will start at `http://127.0.0.1:8000`. On first run, it automatically initializes clean SQLite database tables.*
 
 ### Step 2: Run the Frontend
 ```bash
@@ -138,47 +137,62 @@ npm run dev
 Run the full pytest backend suite covering all 5 engines and API endpoints:
 ```bash
 cd aegis-backend
-python -m pytest tests/ -v
+python -m pytest tests/ -q
 ```
 
 Expected result:
 ```text
-tests/test_api.py ........ [ 50%]
-tests/test_engines.py ........ [100%]
-16 passed
+14 passed in ~2.0s
 ```
 
 ---
 
-## 7. The 3-Minute Hackathon Demo Flow
+## 7. Try It Yourself: Step-by-Step Walkthrough
 
-The prototype includes a built-in, reproducible fictional harassment case (**Ananya, 22**):
+AEGIS is completely dynamic and starts from an empty database. Follow this 6-message sequence to experience how AEGIS detects escalating threats, maps digital attack surfaces, correlates suspect handles, and prepares a formal complaint pack:
 
-1. **0:00–0:30 (Problem & Thesis):**
-   - Open AEGIS. Explain: *"SafeCase tells her what to do. AEGIS explains what is happening."*
-   - Show the **Overview** screen with current state: `HIGH` escalation, trajectory milestones through Day 6.
-2. **0:30–1:00 (Threat Linkage & Exposure):**
-   - Click **Threat Linkage**: show correlation between primary account `@unknown_user01` and secondary account `@unknown_user_01` (very similar usernames, new account soon after the first).
-   - Click **Digital Exposure**: show how public Instagram tags connected to College and residential locality without external web scraping.
-3. **1:00–1:50 (The Winning Moment: "What Changed?"):**
-   - In the top bar, click **"Simulate Day 7 Escalation"** (or go to Analyze and submit: *"Send the photos or I'll expose you"* from `@unknown_user_01`).
-   - Open **"What Changed?"**:
-     - View **BEFORE (HIGH)** ➔ **NEW EVIDENCE** ➔ **AFTER (CRITICAL)**.
-     - Highlight the newly surfaced signals (+ Coercive Demand, + Exposure threat).
-     - Read the plain-language explanation of *Why* the situation escalated.
-4. **1:50–2:30 (Preservation & Reconstruction):**
-   - Open **Evidence Vault**: show the SHA-256 cryptographic integrity hash for the Day 7 message and demonstrate the **Tap-to-Reveal** privacy blur.
-   - Open **Case Reconstruction**: show the objective chronological narrative where every statement cites `[EV-xxx]` evidence tags.
-5. **2:30–3:00 (Complaint Pack & Privacy Sovereignty):**
-   - Open **Complaint Pack**: review the pre-formatted dossier listing provisions that may be relevant (BNS 2023 Sec 78 and 351, IT Act 2000 Sec 66E and 67/67A; to be confirmed with legal aid) ready for **1930 / cybercrime.gov.in**.
-   - Press **`Esc`** key: demonstrate the instant stealth disguise screen (**Daily Notes & Weather**).
-   - Show **Immediate Help** (112, 181, 1930).
+### Step A: Start a Case
+1. Open AEGIS at `http://localhost:5173`.
+2. Notice the calm empty state on **My Cases**: *"No cases yet. Start a case by adding something that worries you."*
+3. Click **"Start a Case"**, name it *"Instagram Harassment"*, and submit.
+
+### Step B: Enter the Six Messages in Order (via "Add Proof")
+Navigate to **"Add Proof"** (or use the fast entry button on My Cases) and submit each message in sequence:
+
+| # | Sender Handle | Platform | Message Text | Engine Detection & Progression |
+| :-: | :--- | :--- | :--- | :--- |
+| **1** | `@unknown_user01` | Instagram Direct | `"Hey, you're cute."` | **Unwanted Contact / Approach (LOW)** · Seals Day 1 evidence with SHA-256 cryptographic stamp in Vault. |
+| **2** | `@unknown_user01` | Instagram Direct | `"Why aren't you replying?"` | **Persistence (MODERATE)** · Detects repeated contact following non-response. |
+| **3** | `@unknown_user01` | Instagram Direct | `"Tell me where you study."` | **Personal Info Probing (HIGH)** · Flags offline campus/institution solicitation. |
+| **4** | `@unknown_user01` | Instagram Direct | `"I know where you live."` | **Intimidation (HIGH)** · Direct reference to physical residence/locality. |
+| **5** | `@unknown_user_01` | Instagram Direct | `"Don't ignore me."` | **Persistence & New Handle** · Introduces secondary handle `@unknown_user_01`. |
+| **6** | `@unknown_user_01` | Instagram Direct | `"Send the photos or I'll expose you."` | **Coercion / Extortion (CRITICAL)** · Acute threat of non-consensual image exposure. |
+
+### Step C: Explore the Generated Intelligence
+- **"What Changed?":** View the differential comparison between before and after the 6th message. It highlights the escalation leap from HIGH to CRITICAL, flags the newly emerged coercive demand signals, and identifies the new secondary handle.
+- **"Connected Clues" (Threat Linkage):** Compares `@unknown_user01` and `@unknown_user_01`. Detects high character overlap (~94%) and platform consistency, with the mandatory attribution guardrail: *"This indicates a potential connection and does not establish attribution."*
+- **"Exposed Info" (Exposure Graph):** Displays how the conversation points connect personal exposure vectors (Instagram handle ➔ College ➔ Residence ➔ Private media threat).
+- **"Evidence Vault":** Inspect each preserved record with its unique, tamper-proof SHA-256 cryptographic stamp. Test the tap-to-reveal blur on sensitive records.
+- **"Report Pack":** Review the generated dossier formatted for **1930 / cybercrime.gov.in**, organized with the heading *"Provisions that may be relevant (confirm with a lawyer or legal-aid clinic)"*.
+- **Quick Exit (<kbd>Esc</kbd>):** Hit the `Esc` key at any point to instantly replace the interface with an innocent daily notes screen.
 
 ---
 
-## 8. Safety & Privacy Guardrails
+## 8. Limitations & Assumptions
 
-- **Attribution Disclaimer:** AEGIS never makes definitive forensic claims of attacker identity. It uses strict wording: *"Potential connection detected"*.
+While AEGIS provides vital structure and clarity for victims of online harassment, several deliberate design choices and technical limitations apply:
+
+1. **Rule-Based Threat Detection:** Detection uses deterministic pattern matching, keyword heuristics, and linguistic rules. It is not an unexplainable deep-learning classifier and does not possess open-ended common sense reasoning.
+2. **Files Stored but Not Analysed:** Image screenshots and audio recordings are stored, timestamped, and cryptographically fingerprinted (SHA-256) for evidentiary preservation, but their visual pixels or audio speech streams are not transcribed, OCR'd, or processed by computer vision models.
+3. **Free-Tier / In-Memory Data Resets:** When deployed to free-tier cloud hosting (e.g., Render free web services), the filesystem and SQLite database are ephemeral and will reset upon service sleep or redeployment.
+4. **No User Authentication:** AEGIS is architected as an anonymous, single-user client companion without account login, passwords, or multi-tenant user isolation. Data confidentiality relies on device access security, immediate local wipe capabilities, and the Quick Exit disguise screen.
+5. **Legal Sections Unverified:** Indian statutory references (BNS 2023 §§ 78, 351, 308; IT Act 2000 §§ 66E, 67, 67A) are cited strictly for informational orientation. They have not been reviewed by legal counsel and do not constitute legal advice. Users must confirm all sections with a lawyer or legal-aid clinic before official filing.
+
+---
+
+## 9. Safety & Privacy Guardrails
+
+- **Attribution Disclaimer:** AEGIS never makes definitive forensic claims of attacker identity. It uses strict wording: *"This indicates a potential connection and does not establish attribution"*.
 - **No Predictive Violence Scoring:** AEGIS evaluates digital threat trajectories based only on provided evidence; it does not claim to predict physical assault.
 - **Evidence Integrity:** SHA-256 hashes are labeled as an *"Evidence Integrity Record"*, not a substitute for forensic court certification.
 - **Zero Third-Party Telemetry:** No marketing cookies, Google Analytics, or third-party tracking scripts.
@@ -186,9 +200,9 @@ The prototype includes a built-in, reproducible fictional harassment case (**Ana
 
 ---
 
-## 9. Indian Legal Context (for orientation only, not legal advice)
+## 10. Indian Legal Context (for orientation only, not legal advice)
 
-These provisions are listed as possibly relevant. They have not been reviewed by a lawyer; confirm with a lawyer or legal-aid clinic before relying on them.
+Provisions that may be relevant (confirm with a lawyer or legal-aid clinic):
 
 - **112:** National Emergency Service (Police / Ambulance / Fire)
 - **181:** Women Helpline (Domestic violence, cyberstalking, counseling)

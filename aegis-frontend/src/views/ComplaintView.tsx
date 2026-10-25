@@ -179,7 +179,7 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
       <div className="card-warm p-6 space-y-4">
         <div className="flex items-center space-x-2 text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
           <Scale className="w-4 h-4 text-[var(--text-muted)]" />
-          <span>Applicable Indian Statutory Sections</span>
+          <span>Provisions that may be relevant (confirm with a lawyer or legal-aid clinic)</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
