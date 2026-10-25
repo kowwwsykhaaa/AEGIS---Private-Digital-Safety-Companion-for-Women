@@ -6,7 +6,7 @@ AEGIS is built with a clear separation of concerns across a modern, responsive w
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       AEGIS FRONTEND (Next.js / React / TS)                 │
+│                       AEGIS FRONTEND (Vite / React 18 / TS)                 │
 │  - Warm Editorial Design System (Tailwind CSS)                              │
 │  - Quick Exit Controller & Global Keyboard Listener (Esc)                   │
 │  - Client-Side SHA-256 Evidence Hasher & Tap-to-Reveal Visual Blur          │
@@ -72,11 +72,10 @@ AEGIS is built with a clear separation of concerns across a modern, responsive w
 
 ### 2.4 Threat Linkage Engine (`services/linkage_engine.py`)
 - **Signals Evaluated:**
-  - Handle / username syntactic distance (Levenshtein, Jaro-Winkler, prefix/suffix mutations)
-  - Temporal burst proximity (messages sent within minutes across accounts)
-  - Stylistic / vocabulary overlap (repeated distinctive phrasing, punctuation quirks)
-  - Shared public identifiers (matching avatar perceptual hash, bio keywords, UPI handle patterns)
-- **Safety Boundary:** Strict output label: *"Potential connection detected"*. Never claims verified legal attribution.
+  - Observable handle / username syntactic character overlap via `difflib.SequenceMatcher`
+  - Sequential timing proximity in elapsed hours between active accounts
+  - Platform consistency (e.g. both accounts active on Instagram)
+- **Safety & Attribution Boundary:** Strict output label: *"Potential connection detected"*. Plain explanations and disclaimers explicitly mandate: *"This indicates a potential connection and does not establish attribution."* Never claims definitive forensic or legal certainty.
 
 ### 2.5 Digital Exposure Graph Engine (`services/exposure_graph.py`)
 - **Model:** Directed node-edge graph mapping:
@@ -88,18 +87,19 @@ AEGIS is built with a clear separation of concerns across a modern, responsive w
 - **Output:** Cohesive, objective narrative timeline where every factual finding links directly to an immutable evidence ID (`[EV-001]`).
 
 ### 2.7 Evidence Vault & Integrity Service (`services/evidence_service.py`)
-- Computes SHA-256 fingerprint.
+- Computes SHA-256 cryptographic fingerprints upon evidence ingestion.
 - Creates immutable timestamp, file size, MIME type, and capture source metadata.
 - Sets `is_sensitive=True` with default client-side visual blur filter.
 
 ### 2.8 Complaint Pack Generator (`services/complaint_service.py`)
-- Compiles a clean, factual PDF and markdown dossier formatted for Indian authorities:
-  - Incident synopsis & timeline
-  - Evidence index with SHA-256 integrity fingerprints
-  - Relevant Indian legal provisions:
-    - *Bharatiya Nyaya Sanhita (BNS) 2023 / Indian Penal Code:* Stalking, criminal intimidation, extortion, word/gesture outraging modesty.
-    - *Information Technology Act 2000:* Section 66E (privacy violation), Section 67 / 67A (obscene/sexually explicit transmission).
-  - Ready for direct submission to the National Cyber Crime Reporting Portal (1930 / cybercrime.gov.in).
+- Compiles a clean, factual markdown and text dossier formatted for Indian authorities:
+  - Incident synopsis & chronological sequence
+  - Evidence integrity index with SHA-256 cryptographic fingerprints
+  - Provisions that may be relevant (confirm with a lawyer or legal-aid clinic):
+    - *Bharatiya Nyaya Sanhita (BNS) 2023:* Section 78 (Stalking), Section 351 (Criminal Intimidation)
+    - *Information Technology Act 2000:* Section 66E (Violation of privacy), Section 67 / 67A (Obscene / sexually explicit electronic material)
+  - Ready for manual submission to the National Cyber Crime Reporting Portal (1930 / cybercrime.gov.in).
+  - **Non-Automated Boundary:** Nothing is ever submitted to police or any authority automatically; all actions are strictly user-initiated.
 
 ---
 
@@ -125,11 +125,13 @@ AuditEvent (id, incident_id, action_name, actor, timestamp, details)
 
 ## 4. Security, Privacy, and Safe Harbor Architecture
 
-1. **Zero-Tracking:** No third-party marketing pixels, analytics, or behavioral cookies.
-2. **Quick Exit:** Persistent button and universal `Esc` key capture:
+1. **Empty Database Operation:** Operates cleanly from a blank database on startup with zero hardcoded demo data, fake percentages, or simulated personas.
+2. **Zero-Tracking:** No third-party marketing pixels, analytics, or behavioral cookies.
+3. **Quick Exit:** Persistent button and universal `Esc` key capture:
    - Immediately clears state from viewport
    - Replaces screen with a neutral weather/notes mockup
    - Clears temporary uncommitted clipboard buffers
-3. **Emergency Wipe ("Delete Everything"):** Cascades deletion across all tables, unlink and unlinks files with cryptographic zeroing where applicable.
-4. **Client-Side Visual Privacy:** Media marked sensitive is automatically rendered behind a CSS blur filter with explicit tap-to-reveal.
-5. **No Blind Web Scraping:** Only processes evidence provided directly by the user.
+4. **Emergency Wipe ("Delete Everything"):** Cascades deletion across all tables and securely removes evidence files.
+5. **Client-Side Visual Privacy:** Media marked sensitive is automatically rendered behind a CSS blur filter with explicit tap-to-reveal.
+6. **No Blind Web Scraping:** Only processes evidence provided directly by the user.
+7. **Attribution & Legal Disclaimers:** Explicitly warns that digital correlation does not establish identity attribution, and legal sections must be confirmed with legal aid.
