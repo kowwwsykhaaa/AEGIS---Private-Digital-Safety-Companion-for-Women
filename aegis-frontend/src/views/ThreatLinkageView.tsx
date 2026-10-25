@@ -81,7 +81,7 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
               <div className="flex items-center space-x-2">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5" />
-                  {conn.verdict} ({conn.confidence_level} Confidence)
+                  {conn.verdict} 
                 </span>
               </div>
             </div>
@@ -114,7 +114,7 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
                           ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20'
                           : 'bg-[var(--bg-card-subtle)] text-[var(--text-secondary)] border-[var(--border-color)]'
                       }`}>
-                        {m.level} Match ({Math.round(m.score * 100)}%)
+                        {m.level === 'Noted' ? 'Noted' : `${m.level} similarity`}
                       </span>
                     </div>
 

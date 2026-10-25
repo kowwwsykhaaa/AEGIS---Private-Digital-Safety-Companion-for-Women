@@ -9,7 +9,7 @@ AEGIS is a personal digital safety intelligence desk built for a women's safety 
 
 ### Tech Stack
 - **Frontend:** Next.js 14 / React 18 / TypeScript / Tailwind CSS / Lucide React / Canvas-Confetti (optional) / Framer Motion (restrained, subtle transitions).
-- **Backend:** FastAPI (Python 3.14+) / Pydantic v2 / SQLAlchemy / Uvicorn.
+- **Backend:** FastAPI (Python 3.10+) / Pydantic v2 / SQLAlchemy / Uvicorn.
 - **Database:** SQLite (local zero-config, portable for hackathon demo) with standard SQLAlchemy relational schema.
 - **Evidence Storage:** Local file system with SHA-256 cryptographic verification.
 - **Testing:** Pytest for backend engines, Jest/React Testing Library / Node scripts for frontend validation.
