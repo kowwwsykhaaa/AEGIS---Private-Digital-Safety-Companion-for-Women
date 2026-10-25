@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://women-safety-mfbg.onrender.com" },
+    { "source": "/api/:path*", "destination": "https://women-safety-mfbg.onrender.com/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
