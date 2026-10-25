@@ -33,14 +33,14 @@ export const Navigation: React.FC<NavigationProps> = ({
   onQuickExit, 
   onToggleTheme,
   currentTheme = 'light',
-  userName = 'Ananya',
+  userName = '',
   isEscalated 
 }) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
-  const initial = (userName.trim()[0] || 'A').toUpperCase();
+  const initial = (userName.trim()[0] || 'U').toUpperCase();
 
   const mainTabs = [
     { to: "/overview", label: "My Cases" },

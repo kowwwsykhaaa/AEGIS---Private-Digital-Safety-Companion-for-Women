@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Link2, 
   AlertCircle, 
@@ -16,10 +17,15 @@ interface ThreatLinkageViewProps {
 }
 
 export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId }) => {
+  const navigate = useNavigate();
   const [linkageData, setLinkageData] = useState<ThreatLinkageData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!incidentId) {
+      setLoading(false);
+      return;
+    }
     fetchLinkage(incidentId)
       .then(setLinkageData)
       .catch(console.error)
@@ -28,7 +34,7 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-warm-600">
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-[var(--text-muted)]">
         <p className="font-bold text-lg">Looking for matching clues between accounts...</p>
       </div>
     );
@@ -36,11 +42,20 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
 
   if (!linkageData || linkageData.connections_found.length === 0) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-3">
-        <h2 className="text-xl font-bold text-charcoal">No Linked Accounts Yet</h2>
-        <p className="text-sm text-warm-600">
-          When messages come from more than one account or handle in a case, AEGIS automatically checks them for matching patterns.
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto shadow-sm">
+          <Link2 className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-serif font-bold text-[var(--text-primary)]">No Linked Accounts Yet</h2>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          When messages come from more than one account or handle in a case, AEGIS checks them for potential connections. This does not establish attribution.
         </p>
+        <button
+          onClick={() => navigate('/analyze')}
+          className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Add Proof
+        </button>
       </div>
     );
   }
@@ -58,7 +73,7 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
           Connected Accounts & Clues
         </h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">
-          Could different accounts belong to the same person? AEGIS highlights matching patterns — such as similar usernames, timing right after each other, and identical phrasing.
+          AEGIS highlights observable patterns across accounts — such as similar usernames, close timing intervals, and shared platforms. This highlights potential connections and does not establish attribution.
         </p>
       </div>
 
@@ -141,7 +156,7 @@ export const ThreatLinkageView: React.FC<ThreatLinkageViewProps> = ({ incidentId
             <div className="flex items-start space-x-2 text-xs text-[var(--text-secondary)] bg-[var(--bg-card-subtle)] p-3.5 rounded-xl border border-[var(--border-color)]">
               <Info className="w-4 h-4 shrink-0 text-[var(--text-muted)] mt-0.5" />
               <span>
-                <strong>Important note:</strong> AEGIS highlights observable patterns to help you explain what happened. Definitive proof of identity requires official cyber cell investigation via platform IP logs.
+                <strong>Important note:</strong> This highlights potential connections between accounts and does not establish attribution. Definitive proof of identity requires official law enforcement inquiry and platform access logs.
               </span>
             </div>
           </div>

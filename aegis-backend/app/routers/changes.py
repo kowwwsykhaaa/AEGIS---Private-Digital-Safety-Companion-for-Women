@@ -35,6 +35,9 @@ def get_latest_change(incident_id: str, db: Session = Depends(get_db)):
             latest_change.before_stage != latest_change.after_stage
         )
 
+        actual_accounts = [a.handle for a in incident.accounts] if incident.accounts else []
+        new_acc = [actual_accounts[-1]] if len(actual_accounts) > 1 else actual_accounts
+
         return ChangeComparisonResponse(
             incident_id=incident.id,
             event_id=latest_change.event_id,
@@ -43,12 +46,12 @@ def get_latest_change(incident_id: str, db: Session = Depends(get_db)):
             before_risk=latest_change.before_risk,
             after_risk=latest_change.after_risk,
             is_escalated=is_escalated,
-            new_threat_signals=new_signals if new_signals else ["Coercion / Extortion Demand"],
-            new_exposure_elements=["Private photographs", "Online audience exposure"],
-            new_accounts_detected=["@unknown_user_01"],
+            new_threat_signals=new_signals if new_signals else [],
+            new_exposure_elements=[],
+            new_accounts_detected=new_acc,
             delta_summary=latest_change.delta_summary,
-            why_it_changed=" ".join(reasons),
-            recommended_priority_action="Preserve evidence in vault immediately and avoid fulfilling any photographic or financial demands.",
+            why_it_changed=" ".join(reasons) if reasons else "Corroborating record added to active case.",
+            recommended_priority_action="Preserve evidence in vault with safety stamps and review recommended protective steps.",
             created_at=latest_change.created_at
         )
 
@@ -58,6 +61,6 @@ def get_latest_change(incident_id: str, db: Session = Depends(get_db)):
     return change_engine.detect_changes(
         incident=incident,
         new_event=last_event,
-        previous_stage="INTIMIDATION" if incident.current_stage == "COERCION" else "UNWANTED_CONTACT",
-        previous_risk="HIGH" if incident.risk_level == "CRITICAL" else "LOW"
+        previous_stage=incident.current_stage,
+        previous_risk=incident.risk_level
     )

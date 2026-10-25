@@ -454,22 +454,29 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 </button>
               </div>
 
-              <div className="space-y-3">
-                {incident.events.map((ev, idx) => (
-                  <div key={ev.id} className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs space-y-1.5 transition-colors">
-                    <div className="flex justify-between items-center font-semibold text-[var(--text-primary)]">
-                      <span>Event #{idx + 1} · {ev.stage.replace(/_/g, ' ')}</span>
-                      <span className="text-[var(--text-muted)] font-normal">{new Date(ev.timestamp).toLocaleDateString()}</span>
+              {incident.events.length === 0 ? (
+                <div className="p-8 text-center bg-[var(--bg-card-subtle)] rounded-xl border border-[var(--border-color)] space-y-2">
+                  <p className="text-sm font-bold text-[var(--text-primary)]">No events logged in this case yet</p>
+                  <p className="text-xs text-[var(--text-muted)]">Events and progression milestones are automatically recorded chronologically when you save proof.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {incident.events.map((ev, idx) => (
+                    <div key={ev.id} className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs space-y-1.5 transition-colors">
+                      <div className="flex justify-between items-center font-semibold text-[var(--text-primary)]">
+                        <span>Event #{idx + 1} · {ev.stage.replace(/_/g, ' ')}</span>
+                        <span className="text-[var(--text-muted)] font-normal">{new Date(ev.timestamp).toLocaleDateString()}</span>
+                      </div>
+                      <div className="p-3 bg-[var(--bg-card)] rounded-lg border border-[var(--border-color)] text-[var(--text-secondary)]">
+                        "{ev.raw_content}"
+                      </div>
+                      <div className="text-[11px] text-[var(--text-muted)]">
+                        Platform: {ev.source_platform} {ev.account_handle ? `· From: ${ev.account_handle}` : ''}
+                      </div>
                     </div>
-                    <div className="p-3 bg-[var(--bg-card)] rounded-lg border border-[var(--border-color)] text-[var(--text-secondary)]">
-                      "{ev.raw_content}"
-                    </div>
-                    <div className="text-[11px] text-[var(--text-muted)]">
-                      Platform: {ev.source_platform} {ev.account_handle ? `· From: ${ev.account_handle}` : ''}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -486,15 +493,22 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {incident.accounts.map((acc) => (
-                  <div key={acc.id} className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs space-y-1 transition-colors">
-                    <span className="font-bold text-sm text-[var(--text-primary)]">{acc.handle}</span>
-                    <p className="text-[var(--text-secondary)] font-normal">Platform: {acc.platform}</p>
-                    <p className="text-[var(--text-muted)] text-[11px]">First seen: {new Date(acc.first_seen).toLocaleDateString()}</p>
-                  </div>
-                ))}
-              </div>
+              {incident.accounts.length === 0 ? (
+                <div className="p-8 text-center bg-[var(--bg-card-subtle)] rounded-xl border border-[var(--border-color)] space-y-2">
+                  <p className="text-sm font-bold text-[var(--text-primary)]">No sender accounts recorded yet</p>
+                  <p className="text-xs text-[var(--text-muted)]">When proof is saved with a sender username, handle, or phone number, it will be listed here.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {incident.accounts.map((acc) => (
+                    <div key={acc.id} className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs space-y-1 transition-colors">
+                      <span className="font-bold text-sm text-[var(--text-primary)]">{acc.handle}</span>
+                      <p className="text-[var(--text-secondary)] font-normal">Platform: {acc.platform}</p>
+                      <p className="text-[var(--text-muted)] text-[11px]">First seen: {new Date(acc.first_seen).toLocaleDateString()}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -552,15 +566,30 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
           </div>
         </div>
       ) : (
-        <div className="card-warm p-8 text-center space-y-3">
-          <h2 className="font-serif text-xl font-bold text-[var(--text-primary)]">No Active Case Selected</h2>
-          <p className="text-sm text-[var(--text-secondary)]">Start a case or load sample data from your profile to begin.</p>
-          <button
-            onClick={() => setShowNewCaseModal(true)}
-            className="bg-[var(--accent-rose)] text-white px-6 py-2.5 rounded-full text-xs font-semibold shadow-sm"
-          >
-            Start a Case
-          </button>
+        <div className="card-warm p-10 sm:p-14 text-center space-y-4 my-6">
+          <div className="w-14 h-14 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto mb-2 shadow-sm">
+            <FolderLock className="w-7 h-7" />
+          </div>
+          <h2 className="font-serif text-2xl font-bold text-[var(--text-primary)]">
+            No cases yet
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto leading-relaxed">
+            Start a case by adding something that worries you
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <button
+              onClick={() => setShowNewCaseModal(true)}
+              className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-6 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+            >
+              Start a Case
+            </button>
+            <button
+              onClick={() => navigate('/analyze')}
+              className="bg-[var(--bg-card)] hover:bg-[var(--bg-card-subtle)] text-[var(--text-primary)] border border-[var(--border-color)] px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+            >
+              Add Proof Directly
+            </button>
+          </div>
         </div>
       )}
 

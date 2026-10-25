@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FileCheck2, 
   Copy, 
@@ -17,14 +18,19 @@ interface ComplaintViewProps {
 }
 
 export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
+  const navigate = useNavigate();
   const [pack, setPack] = useState<ComplaintPackData | null>(null);
   const [loading, setLoading] = useState(true);
   const [userStatement, setUserStatement] = useState('');
-  const [suspectIdentifiers, setSuspectIdentifiers] = useState('@unknown_user01, @unknown_user_01 (Instagram)');
+  const [suspectIdentifiers, setSuspectIdentifiers] = useState('');
   const [copied, setCopied] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
+    if (!incidentId) {
+      setLoading(false);
+      return;
+    }
     fetchComplaintPack(incidentId)
       .then(data => {
         setPack(data);
@@ -70,7 +76,7 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-warm-600">
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-[var(--text-muted)]">
         <p className="font-bold text-lg">Preparing your official report pack...</p>
       </div>
     );
@@ -78,8 +84,20 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
 
   if (!pack) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center text-warm-600">
-        <p>No report pack available.</p>
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto shadow-sm">
+          <FileCheck2 className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-serif font-bold text-[var(--text-primary)]">No Report Pack Available</h2>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          Select an active case or save messages to prepare a police-ready report pack.
+        </p>
+        <button
+          onClick={() => navigate('/overview')}
+          className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          View Cases
+        </button>
       </div>
     );
   }
@@ -140,6 +158,7 @@ export const ComplaintView: React.FC<ComplaintViewProps> = ({ incidentId }) => {
               type="text"
               value={suspectIdentifiers}
               onChange={(e) => setSuspectIdentifiers(e.target.value)}
+              placeholder="e.g. @account_handle (Instagram)"
               className="w-full rounded-xl border border-[var(--border-color)] px-3.5 py-2 text-xs text-[var(--text-primary)] bg-[var(--bg-input)] focus:outline-none focus:ring-2 focus:ring-aegis-rose-accent/40"
             />
           </div>

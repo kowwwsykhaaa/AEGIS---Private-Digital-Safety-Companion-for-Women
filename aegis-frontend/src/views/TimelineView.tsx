@@ -12,8 +12,20 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ incident }) => {
 
   if (!incident || !incident.events || incident.events.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-warm-600">
-        <p className="font-bold text-lg">No timeline events logged yet.</p>
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto shadow-sm">
+          <Clock className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-serif font-bold text-[var(--text-primary)]">No Timeline Events Logged Yet</h2>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          Events are ordered chronologically with dates and safety stamps once you add proof to your case.
+        </p>
+        <button
+          onClick={() => navigate('/analyze')}
+          className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Add Proof
+        </button>
       </div>
     );
   }

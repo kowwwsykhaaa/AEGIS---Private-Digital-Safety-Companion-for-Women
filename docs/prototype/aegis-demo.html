@@ -676,7 +676,7 @@ const esc = t => String(t || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '
 
 let nid = 1;
 let S = {
-  profile: { name: 'Ananya', helper: '', phone: '', disguise: false, theme: 'light' },
+  profile: { name: 'User', helper: '', phone: '', disguise: false, theme: 'light' },
   view: 'landing', // Landing page first!
   cases: [],
   cur: null,
@@ -737,23 +737,54 @@ function mk(e) {
   return o;
 }
 
+function saveCases() {
+  try {
+    const toSave = S.cases.map(c => ({
+      id: c.id,
+      name: c.name,
+      tab: c.tab,
+      changes: c.changes,
+      events: c.events.map(e => ({
+        day: e.day,
+        type: e.type,
+        from: e.from,
+        text: e.text,
+        fname: e.fname,
+        ftype: e.ftype,
+        dataUrl: e.dataUrl,
+        sig: e.sig,
+        ts: e.ts,
+        hash: e.hash
+      }))
+    }));
+    localStorage.setItem('aegis_html_cases', JSON.stringify(toSave));
+  } catch (e) {}
+}
+
 function newCase(name, evs) {
   const c = { id: nid++, name, events: [], changes: null, tab: 'proof' };
   evs.forEach(e => c.events.push(mk(e)));
   S.cases.push(c);
+  saveCases();
   return c;
 }
 
 function initDefaultCases() {
-  S.cases = [];
   nid = 1;
-  // Pre-seed realistic case
-  newCase('Harassment from @unknown_user01', [
-    { day: 1, type: 'message', from: '@unknown_user01', text: "Hey, you're cute." },
-    { day: 3, type: 'message', from: '@unknown_user01', text: "Why aren't you replying?" },
-    { day: 5, type: 'message', from: '@unknown_user01', text: "Tell me where you study." },
-    { day: 6, type: 'message', from: '@unknown_user01', text: "I know where you live." }
-  ]);
+  try {
+    const raw = localStorage.getItem('aegis_html_cases');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        S.cases = parsed;
+        nid = Math.max(...S.cases.map(c => c.id || 1)) + 1;
+        S.cur = S.cases[0].id;
+        return;
+      }
+    }
+  } catch (e) {}
+  S.cases = [];
+  S.cur = null;
 }
 
 function links(c) {
@@ -799,6 +830,7 @@ function addEventToCase() {
   c.tab = 'proof';
   S.cur = c.id;
   S.view = 'case';
+  saveCases();
   showToast("Proof added to your case");
 }
 
@@ -1662,6 +1694,7 @@ document.addEventListener('click', ev => {
   } else if (D.del) {
     const [a, b] = D.del.split(':');
     gc(+a).events.splice(+b, 1);
+    saveCases();
     showToast("Proof removed from case");
   } else {
     const a = D.act, d = S.draft;
@@ -1673,6 +1706,7 @@ document.addEventListener('click', ev => {
     if (a === 'delall') {
       S.cases = [];
       S.pending = null;
+      saveCases();
       showToast("All data permanently erased");
     }
     if (a === 'dl') {
@@ -1745,6 +1779,7 @@ document.addEventListener('change', e => {
 document.addEventListener('input', e => {
   if (e.target.dataset.pf) {
     S.profile[e.target.dataset.pf] = e.target.value;
+    try { localStorage.setItem('aegis_html_profile', JSON.stringify(S.profile)); } catch (err) {}
     nav();
   }
   if (['atext', 'afrom', 'aname'].includes(e.target.id)) sync();
@@ -1752,6 +1787,12 @@ document.addEventListener('input', e => {
 });
 
 // Initialize
+try {
+  const savedProfile = localStorage.getItem('aegis_html_profile');
+  if (savedProfile) {
+    Object.assign(S.profile, JSON.parse(savedProfile));
+  }
+} catch (e) {}
 try {
   const savedTheme = localStorage.getItem('aegis_theme');
   if (savedTheme === 'dark' || savedTheme === 'light') {

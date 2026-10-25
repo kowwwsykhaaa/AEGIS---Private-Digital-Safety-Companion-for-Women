@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Archive, 
   ShieldCheck, 
@@ -19,15 +20,25 @@ interface EvidenceVaultViewProps {
 }
 
 export const EvidenceVaultView: React.FC<EvidenceVaultViewProps> = ({ incident }) => {
+  const navigate = useNavigate();
   const [revealedItems, setRevealedItems] = useState<Record<string, boolean>>({});
 
   if (!incident || incident.evidence_items.length === 0) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-3">
-        <h2 className="text-xl font-bold text-charcoal">No Proof Saved Yet</h2>
-        <p className="text-sm text-warm-600">
-          Upload screenshots, audio recordings, or messages in the 'Add Proof' tab to keep them safely organized.
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto shadow-sm">
+          <Archive className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-serif font-bold text-[var(--text-primary)]">No Proof Saved Yet</h2>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          Upload screenshots, audio recordings, or messages in the 'Add Proof' tab to keep them safely organized with tamper-proof safety stamps.
         </p>
+        <button
+          onClick={() => navigate('/analyze')}
+          className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          Add Proof
+        </button>
       </div>
     );
   }

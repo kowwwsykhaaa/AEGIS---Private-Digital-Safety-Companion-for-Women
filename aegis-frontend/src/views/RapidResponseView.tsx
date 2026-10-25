@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import { 
-  Compass, 
-  CheckCircle2, 
-  Copy, 
-  Check, 
-  ExternalLink, 
-  ShieldAlert, 
-  Lock,
-  ChevronDown,
-  Info,
-  HeartHandshake
-} from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
+import { IncidentData } from '../lib/api';
 
-export const RapidResponseView: React.FC = () => {
+interface RapidResponseViewProps {
+  incident?: IncidentData | null;
+}
+
+export const RapidResponseView: React.FC<RapidResponseViewProps> = ({ incident }) => {
   const [copiedTemplate, setCopiedTemplate] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>({});
 
@@ -20,14 +14,27 @@ export const RapidResponseView: React.FC = () => {
     setCompletedSteps(prev => ({ ...prev, [num]: !prev[num] }));
   };
 
+  const suspectHandles = incident?.accounts && incident.accounts.length > 0
+    ? incident.accounts.map(a => `@${a.handle.replace(/^@/, '')}`).join(', ')
+    : (incident?.events && incident.events.some(e => e.account_handle)
+      ? Array.from(new Set(incident.events.map(e => e.account_handle ? `@${e.account_handle.replace(/^@/, '')}` : '').filter(Boolean))).join(', ')
+      : '[Insert Suspect Username / Handle]');
+
+  const platforms = incident?.accounts && incident.accounts.length > 0
+    ? Array.from(new Set(incident.accounts.map(a => a.platform))).join(', ')
+    : (incident?.events && incident.events.some(e => e.source_platform)
+      ? Array.from(new Set(incident.events.map(e => e.source_platform).filter(Boolean))).join(', ')
+      : '[Platform]');
+
   const grievanceTemplate = `To: Grievance Officer,
 
-I am writing to formally report targeted harassment and online intimidation perpetrated against me by account @unknown_user01 and @unknown_user_01 in violation of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021.
+I am writing to formally report targeted harassment and online intimidation perpetrated against me by account ${suspectHandles} on ${platforms} in violation of the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021.
 
-The harasser has sent persistent unwanted threats, claimed knowledge of my physical location, and made intimidating demands.
+The harasser has sent persistent unwanted threats and intimidating demands${incident?.id ? ` (Case Reference: ${incident.id})` : ''}.
 
 Details:
-- Reported Handles: @unknown_user01, @unknown_user_01
+- Reported Handles: ${suspectHandles}
+- Platforms: ${platforms}
 - Offenses: Cyberstalking, Criminal Intimidation (Bharatiya Nyaya Sanhita / IT Act 2000).
 - Proof preserved with tamper-proof safety stamps via AEGIS.
 

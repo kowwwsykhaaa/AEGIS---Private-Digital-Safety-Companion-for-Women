@@ -21,6 +21,10 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!incidentId) {
+      setLoading(false);
+      return;
+    }
     fetchReconstruction(incidentId)
       .then(setData)
       .catch(console.error)
@@ -29,7 +33,7 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-warm-600">
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-[var(--text-muted)]">
         <p className="font-bold text-lg">Organizing events into chronological order...</p>
       </div>
     );
@@ -37,8 +41,20 @@ export const CaseReconstructionView: React.FC<CaseReconstructionViewProps> = ({ 
 
   if (!data) {
     return (
-      <div className="max-w-md mx-auto px-4 py-16 text-center text-warm-600">
-        <p>No story summary available yet.</p>
+      <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
+        <div className="w-12 h-12 rounded-full bg-[var(--accent-rose-light)] text-[var(--accent-rose)] flex items-center justify-center mx-auto shadow-sm">
+          <FileText className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-serif font-bold text-[var(--text-primary)]">No Story Summary Available</h2>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          Select an active case or add proof to view the synthesized chronological story.
+        </p>
+        <button
+          onClick={() => navigate('/overview')}
+          className="bg-[var(--accent-rose)] hover:bg-[var(--accent-rose-hover)] text-white px-5 py-2.5 rounded-full text-xs font-semibold shadow-sm transition-all"
+        >
+          View Cases
+        </button>
       </div>
     );
   }

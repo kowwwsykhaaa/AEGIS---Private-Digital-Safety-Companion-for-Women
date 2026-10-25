@@ -155,11 +155,11 @@ export const AnalyzeView: React.FC<AnalyzeViewProps> = ({
                     Case: {c.title}
                   </option>
                 ))
-              ) : (
-                <option value={incident?.id || 'default'}>
-                  Case: {incident?.title || 'Current Situation'}
+              ) : incident ? (
+                <option value={incident.id}>
+                  Case: {incident.title}
                 </option>
-              )}
+              ) : null}
               <option value="new">+ Start a new case</option>
             </select>
           </div>
@@ -262,7 +262,7 @@ export const AnalyzeView: React.FC<AnalyzeViewProps> = ({
                 type="text"
                 value={handle}
                 onChange={(e) => setHandle(e.target.value)}
-                placeholder="e.g. @unknown_user01, +91 ..."
+                placeholder="e.g. @username, +91 ..."
                 className="w-full rounded-xl border border-[var(--border-color)] px-3.5 py-2 text-sm text-[var(--text-primary)] bg-[var(--bg-input)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-rose)]/40 transition-colors"
               />
             </div>

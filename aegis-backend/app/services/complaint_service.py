@@ -76,18 +76,38 @@ class ComplaintService:
                 "sensitive_tag": ev.is_sensitive
             })
 
-        # Threat indicators
-        threat_indicators = [
-            "Progression from unprompted contact to persistent messaging",
-            "Attempts to discover physical college campus / location",
-            "Direct claims of observing residence ('I know where you live')",
-            "Coercive extortion demanding photos under threat of public exposure"
-        ]
+        # Extract real suspect handles and platforms
+        handles = list(dict.fromkeys([ev.account_handle for ev in events if ev.account_handle]))
+        platforms = list(dict.fromkeys([ev.source_platform for ev in events if ev.source_platform]))
+        
+        default_suspects = ", ".join(handles)
+        if platforms:
+            default_suspects += f" ({', '.join(platforms)})"
+        if not default_suspects.strip():
+            default_suspects = "Unidentified account / sender"
 
-        connection_signals = [
-            "Correlated handle naming syntax (@unknown_user01 & @unknown_user_01)",
-            "Consecutive message timing following non-engagement"
-        ]
+        # Dynamically build threat indicators based on real event stages
+        stages_present = {ev.stage for ev in events}
+        threat_indicators = []
+        if "COERCION" in stages_present:
+            threat_indicators.append("Coercive extortion demanding compliance under threat of public disclosure")
+        if "INTIMIDATION" in stages_present:
+            threat_indicators.append("Direct statements intended to intimidate or claiming awareness of personal whereabouts")
+        if "PII_REFERENCE" in stages_present:
+            threat_indicators.append("Probing for personal contact details, residential location, or institutional affiliation")
+        if "PERSISTENCE" in stages_present:
+            threat_indicators.append("Repeated messaging following absence of reciprocal engagement")
+        if not threat_indicators:
+            threat_indicators.append("Unsolicited electronic communication")
+
+        # Dynamically build connection signals
+        connection_signals = []
+        if len(handles) > 1:
+            connection_signals.append(f"Multiple interacting accounts identified ({', '.join(handles)}) across recorded timeframe")
+        elif len(handles) == 1:
+            connection_signals.append(f"Consistent communications recorded from account {handles[0]}")
+        else:
+            connection_signals.append("Single digital interaction thread preserved")
 
         submission_instructions = {
             "portal_url": "https://cybercrime.gov.in",
@@ -98,8 +118,11 @@ class ComplaintService:
         }
 
         # Format full markdown dossier
-        statement_block = user_statement or "The sender has continuously harassed, stalked, and threatened me despite zero encouragement. I am filing this documentation to seek official intervention and preserve my safety."
-        suspect_block = suspect_identifiers or "@unknown_user01, @unknown_user_01 (Instagram)"
+        statement_block = user_statement or "The sender has continuously sent unwanted, intimidating, and non-consensual communications. I am submitting this structured evidence log to preserve my safety and request formal investigation."
+        suspect_block = suspect_identifiers or default_suspects
+
+        date_range_str = f"Between {events[0].timestamp.strftime('%Y-%m-%d')} and {events[-1].timestamp.strftime('%Y-%m-%d')}" if len(events) >= 2 else f"On {events[0].timestamp.strftime('%Y-%m-%d')}" if events else "Recorded sequence"
+        exec_summary = f"{date_range_str}, the complainant documented {len(events)} electronic interaction(s) via {', '.join(platforms) if platforms else 'digital messaging'}. The communication progressed across stages ({', '.join(sorted(stages_present)) if stages_present else 'unsolicited contact'}), supported by {len(evidence_items)} tamper-proof cryptographic evidence record(s)."
 
         formatted_dossier_text = f"""================================================================================
 AEGIS DIGITAL SAFETY INTELLIGENCE — FORMAL COMPLAINT DOSSIER
@@ -116,7 +139,7 @@ Incident Title: {incident.title}
 {suspect_block}
 
 3. EXECUTIVE INCIDENT SUMMARY:
-Between {events[0].timestamp.strftime('%Y-%m-%d') if events else 'N/A'} and {events[-1].timestamp.strftime('%Y-%m-%d') if events else 'N/A'}, the complainant was targeted by systematic digital intimidation and extortion. The interaction escalated from unsolicited overtures to physical location references and coercive demands regarding private photographs.
+{exec_summary}
 
 4. PROVISIONS THAT MAY BE RELEVANT (INDIA) - to be confirmed with a lawyer or legal-aid clinic:
 - Bharatiya Nyaya Sanhita 2023, Sec 78: Stalking

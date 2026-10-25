@@ -1,3 +1,4 @@
+import json
 import uuid
 import datetime
 from fastapi import APIRouter, Depends, HTTPException
@@ -117,8 +118,8 @@ def analyze_message(payload: AnalyzeInput, db: Session = Depends(get_db)):
                 before_risk=change_res.before_risk,
                 after_risk=change_res.after_risk,
                 delta_summary=change_res.delta_summary,
-                reasons_json=f'["{change_res.why_it_changed}"]',
-                new_signals_json=f'["{", ".join(change_res.new_threat_signals)}"]',
+                reasons_json=json.dumps([change_res.why_it_changed]),
+                new_signals_json=json.dumps(change_res.new_threat_signals),
                 created_at=datetime.datetime.utcnow()
             )
             db.add(change_evt)
