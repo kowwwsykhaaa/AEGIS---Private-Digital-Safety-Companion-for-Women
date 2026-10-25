@@ -3,6 +3,8 @@
 > 
 > *SafeCase tells her what to do. AEGIS explains what is happening.*
 
+> **About this prototype:** every case, name and message shown is fictional. AEGIS never contacts the police or submits any complaint; it only prepares a draft for the user to review and use herself.
+
 AEGIS is a personal digital safety intelligence desk built for women facing online harassment, cyberstalking, intimidation, coercion, or digital exposure. It synthesizes the rapid-response foundation of **SafeCase** (evidence triage, client-side cryptographic hashing, platform reporting, and cybercrime complaint generation) with the threat-intelligence layer of **AEGIS** (longitudinal threat escalation, digital exposure graph, cross-account threat linkage, case reconstruction, and change detection).
 
 ---
@@ -14,7 +16,7 @@ When women experience digital harassment or extortion, existing tools fall into 
 - **Generic AI Chatbots & Classifiers:** Either offer platitudes ("I'm sorry you are feeling upset") or output unexplainable black-box risk numbers ("93% threat") without telling the victim what changed, what pieces of her identity are exposed, or what evidence to preserve.
 
 ### How AEGIS Solves This
-AEGIS reconstructs how online abuse develops across time, connects fragmented evidence across accounts, detects what changed since the last interaction, and compiles a legally structured complaint pack for official authorities (National Cyber Crime Reporting Portal 1930 / cybercrime.gov.in) with cryptographic integrity records.
+AEGIS reconstructs how online abuse develops across time, connects fragmented evidence across accounts, detects what changed since the last interaction, and compiles a structured complaint pack for official authorities (National Cyber Crime Reporting Portal 1930 / cybercrime.gov.in) with cryptographic integrity records.
 
 ---
 
@@ -41,7 +43,7 @@ DETECT ➔ UNDERSTAND ➔ CONNECT ➔ RECONSTRUCT ➔ DETECT CHANGE ➔ PROTECT 
 
 - **Frontend:** React 18, TypeScript, Tailwind CSS, Lucide React, React Router v6, Vite.
   - *Aesthetic:* Soft light, warm ivory (`#FBFBF9`), warm surfaces, soft charcoal text, restrained semantic accents (muted terracotta red, warm amber, muted sage, restrained blue), and editorial serif typography.
-- **Backend:** FastAPI (Python 3.14+), Pydantic v2, SQLAlchemy ORM, Uvicorn.
+- **Backend:** FastAPI (Python 3.10+, tested on 3.12), Pydantic v2, SQLAlchemy ORM, Uvicorn.
 - **Database:** SQLite (local zero-config, portable for hackathon demos) / PostgreSQL ready.
 - **Testing:** Pytest backend suite with automated engine and API route verification.
 
@@ -143,7 +145,7 @@ Expected result:
 ```text
 tests/test_api.py ........ [ 50%]
 tests/test_engines.py ........ [100%]
-16 passed in 2.20s
+16 passed
 ```
 
 ---
@@ -156,7 +158,7 @@ The prototype includes a built-in, reproducible fictional harassment case (**Ana
    - Open AEGIS. Explain: *"SafeCase tells her what to do. AEGIS explains what is happening."*
    - Show the **Overview** screen with current state: `HIGH` escalation, trajectory milestones through Day 6.
 2. **0:30–1:00 (Threat Linkage & Exposure):**
-   - Click **Threat Linkage**: show correlation between primary account `@unknown_user01` and secondary account `@unknown_user_01` (92% naming similarity, timing burst correlation).
+   - Click **Threat Linkage**: show correlation between primary account `@unknown_user01` and secondary account `@unknown_user_01` (very similar usernames, new account soon after the first).
    - Click **Digital Exposure**: show how public Instagram tags connected to College and residential locality without external web scraping.
 3. **1:00–1:50 (The Winning Moment: "What Changed?"):**
    - In the top bar, click **"Simulate Day 7 Escalation"** (or go to Analyze and submit: *"Send the photos or I'll expose you"* from `@unknown_user_01`).
@@ -168,7 +170,7 @@ The prototype includes a built-in, reproducible fictional harassment case (**Ana
    - Open **Evidence Vault**: show the SHA-256 cryptographic integrity hash for the Day 7 message and demonstrate the **Tap-to-Reveal** privacy blur.
    - Open **Case Reconstruction**: show the objective chronological narrative where every statement cites `[EV-xxx]` evidence tags.
 5. **2:30–3:00 (Complaint Pack & Privacy Sovereignty):**
-   - Open **Complaint Pack**: review the pre-formatted dossier citing Bharatiya Nyaya Sanhita 2023 (Sec 78 Cyberstalking, Sec 351 Intimidation) and IT Act 2000 (Sec 66E, 67A) ready for **1930 / cybercrime.gov.in**.
+   - Open **Complaint Pack**: review the pre-formatted dossier listing provisions that may be relevant (BNS 2023 Sec 78 and 351, IT Act 2000 Sec 66E and 67/67A; to be confirmed with legal aid) ready for **1930 / cybercrime.gov.in**.
    - Press **`Esc`** key: demonstrate the instant stealth disguise screen (**Daily Notes & Weather**).
    - Show **Immediate Help** (112, 181, 1930).
 
@@ -184,14 +186,16 @@ The prototype includes a built-in, reproducible fictional harassment case (**Ana
 
 ---
 
-## 9. Statutory Indian Legal Context
+## 9. Indian Legal Context (for orientation only, not legal advice)
+
+These provisions are listed as possibly relevant. They have not been reviewed by a lawyer; confirm with a lawyer or legal-aid clinic before relying on them.
 
 - **112:** National Emergency Service (Police / Ambulance / Fire)
 - **181:** Women Helpline (Domestic violence, cyberstalking, counseling)
 - **1930:** National Cyber Crime Helpline & reporting portal (cybercrime.gov.in)
 - **Statutory Provisions Cited:**
-  - *Bharatiya Nyaya Sanhita (BNS) 2023, Section 78:* Cyberstalking
+  - *Bharatiya Nyaya Sanhita (BNS) 2023, Section 78:* Stalking (including online)
   - *Bharatiya Nyaya Sanhita (BNS) 2023, Section 351:* Criminal Intimidation
   - *Information Technology Act 2000, Section 66E:* Violation of privacy
   - *Information Technology Act 2000, Section 67 / 67A:* Obscene / sexually explicit electronic material
-  - *IT Rules 2021, Rule 3(2)(b):* Mandatory 72-hour intermediary takedown for harassment and intimate imagery.
+  - *IT Rules 2021:* platforms must run a grievance process with set deadlines. Confirm the current deadlines on an official government source.

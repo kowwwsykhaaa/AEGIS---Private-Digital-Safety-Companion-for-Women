@@ -204,7 +204,7 @@ def seed_demo_case(db: Session, full_progression: bool = True) -> Incident:
             before_risk="HIGH",
             after_risk="CRITICAL",
             delta_summary="Threat level escalated from HIGH to CRITICAL. Introduced explicit extortion demand with exposure threat and identified correlated secondary account.",
-            reasons_json='["New coercive threat language referencing private photos", "Shift from physical tracking to active digital extortion", "New account (@unknown_user_01) detected with 92% naming similarity", "Acute urgency: non-consensual image distribution risk"]',
+            reasons_json='["New coercive threat language referencing private photos", "Shift from physical tracking to active digital extortion", "New account (@unknown_user_01) detected with a very similar username", "Acute urgency: non-consensual image distribution risk"]',
             new_signals_json='["Coercion / Extortion Demand", "Potential Account Linkage (@unknown_user_01)", "Private Image Exposure Risk"]',
             created_at=day7_time
         )

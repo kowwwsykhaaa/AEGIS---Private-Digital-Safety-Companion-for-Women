@@ -75,7 +75,7 @@ def test_threat_linkage_engine():
     assert len(linkage.connections_found) == 1
     conn = linkage.connections_found[0]
     assert conn.verdict == "Potential connection detected"
-    assert conn.confidence_level == "High"
+    assert conn.confidence_level == "Moderate"  # similarity is a signal, not proof of attribution
     assert any("Username Pattern Similarity" in m.name for m in conn.metrics)
 
 def test_evidence_service_sha256():

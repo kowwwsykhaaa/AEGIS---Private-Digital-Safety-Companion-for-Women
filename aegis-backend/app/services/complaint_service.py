@@ -17,7 +17,7 @@ class ComplaintService:
         LegalSection(
             act="Bharatiya Nyaya Sanhita (BNS) 2023",
             section="Section 78 (previously IPC 354D)",
-            offense="Cyberstalking",
+            offense="Stalking (including online)",
             description="Monitoring a woman's use of the internet, email, or any other form of electronic communication repeatedly."
         ),
         LegalSection(
@@ -118,8 +118,8 @@ Incident Title: {incident.title}
 3. EXECUTIVE INCIDENT SUMMARY:
 Between {events[0].timestamp.strftime('%Y-%m-%d') if events else 'N/A'} and {events[-1].timestamp.strftime('%Y-%m-%d') if events else 'N/A'}, the complainant was targeted by systematic digital intimidation and extortion. The interaction escalated from unsolicited overtures to physical location references and coercive demands regarding private photographs.
 
-4. RELEVANT STATUTORY PROVISIONS (INDIA):
-- Bharatiya Nyaya Sanhita 2023, Sec 78: Cyberstalking
+4. PROVISIONS THAT MAY BE RELEVANT (INDIA) - to be confirmed with a lawyer or legal-aid clinic:
+- Bharatiya Nyaya Sanhita 2023, Sec 78: Stalking
 - Bharatiya Nyaya Sanhita 2023, Sec 351: Criminal Intimidation
 - Information Technology Act 2000, Sec 66E: Privacy Violation
 - Information Technology Act 2000, Sec 67/67A: Transmitting Obscene Content

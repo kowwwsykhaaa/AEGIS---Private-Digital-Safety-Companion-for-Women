@@ -513,7 +513,7 @@ export const OverviewView: React.FC<OverviewViewProps> = ({
                 <div className="p-4 rounded-xl bg-[var(--bg-card-subtle)] border border-[var(--border-color)] text-xs space-y-1 transition-colors">
                   <span className="font-bold text-[var(--text-primary)]">2. Generate a police-ready report pack</span>
                   <p className="text-[var(--text-secondary)] leading-relaxed font-normal">
-                    AEGIS creates a formal summary citing relevant provisions (IPC 354D, IT Act 66E/67A) and lists all evidence with dates and safety stamps.
+                    AEGIS creates a formal summary listing provisions that may be relevant (to be confirmed with legal aid) and lists all evidence with dates and safety stamps.
                   </p>
                   <button
                     onClick={() => navigate('/complaint')}

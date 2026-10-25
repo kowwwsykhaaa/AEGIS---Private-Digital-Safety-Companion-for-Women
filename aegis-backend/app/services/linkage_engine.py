@@ -40,18 +40,18 @@ class ThreatLinkageEngine:
                             name="Username Pattern Similarity",
                             level="High" if handle_sim >= 0.85 else "Moderate",
                             score=round(handle_sim, 2),
-                            description=f"Direct character sequence overlap ({int(handle_sim*100)}%) between {a1.handle} and {a2.handle} (underscore/numeric variation)."
+                            description=f"{a1.handle} and {a2.handle} are very similar once underscores and numbers are ignored."
                         ),
                         LinkageMetric(
                             name="Thematic Phrasing Overlap",
-                            level="High",
-                            score=0.86,
+                            level="Noted",
+                            score=0.0,
                             description="Both accounts employ consistent imperative syntax and image exposure references."
                         ),
                         LinkageMetric(
-                            name="Timing Burst Correlation",
-                            level="High",
-                            score=0.91,
+                            name="Timing",
+                            level="Noted",
+                            score=0.0,
                             description="Secondary account initiated messaging immediately following non-response on primary account."
                         ),
                     ]
@@ -60,7 +60,7 @@ class ThreatLinkageEngine:
                         account_a=a1.handle,
                         account_b=a2.handle,
                         verdict="Potential connection detected",
-                        confidence_level="High",
+                        confidence_level="Moderate",
                         metrics=metrics,
                         shared_signals=[
                             "Near-identical handle syntax",
@@ -68,9 +68,9 @@ class ThreatLinkageEngine:
                             "Coercive demand consistency"
                         ],
                         plain_explanation=(
-                            f"Account {a2.handle} demonstrates high naming affinity to {a1.handle} "
-                            "combined with synchronized timing. While attribution cannot be legally proven, "
-                            "the pattern strongly indicates coordinated or singular operation."
+                            f"Account {a2.handle} has a very similar name to {a1.handle} "
+                            "and appeared soon after the earlier account. This does not establish that they are "
+                            "the same person; similar names and timing can be a coincidence."
                         )
                     ))
                 else:
